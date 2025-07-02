@@ -53,10 +53,10 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
       return;
     }
 
-    const recipients = formData.recipients
-      .split(/[\n,;]/)
-      .map(email => email.trim())
-      .filter(email => email);
+    // Recipients are already an array from the frontend
+    const recipients = Array.isArray(formData.recipients) 
+      ? formData.recipients 
+      : formData.recipients.split(/[\n,;]/).map(email => email.trim()).filter(email => email);
 
     if (recipients.length === 0) {
       toast({

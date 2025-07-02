@@ -74,7 +74,7 @@ const UnifiedEmailSender = () => {
       />
 
       <SendEmailSection
-        formData={{...formData, recipients: recipients.join('\n')}}
+        formData={{...formData, recipients: recipients}}
         uploadedImageUrl={uploadedImageUrl}
         recipientCount={recipientCount}
         sending={sending}

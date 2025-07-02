@@ -6,7 +6,7 @@ export interface OfferFormData {
   description: string;
   price: string;
   cta: string;
-  recipients: string;
+  recipients: string | string[];
 }
 
 export interface EmailStats {
