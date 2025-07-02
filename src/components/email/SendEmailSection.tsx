@@ -30,6 +30,10 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
   const { toast } = useToast();
 
   const sendEmails = async () => {
+    console.log('🚀 SendEmails called with formData:', formData);
+    console.log('📨 Recipients count:', recipientCount);
+    console.log('🖼️ Image URL:', uploadedImageUrl);
+    
     // Validation
     if (!uploadedImageUrl) {
       toast({
@@ -66,6 +70,13 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
     setSending(true);
 
     try {
+      console.log('📡 Making API call to:', `${API_BASE_URL}/send-offer-emails`);
+      console.log('📦 Request payload:', {
+        ...formData,
+        recipients,
+        imageUrl: uploadedImageUrl,
+      });
+      
       const response = await fetch(`${API_BASE_URL}/send-offer-emails`, {
         method: 'POST',
         headers: {

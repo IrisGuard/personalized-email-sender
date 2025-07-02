@@ -2,7 +2,6 @@
 import React from "react";
 import SingleEmailInput from "./recipients/SingleEmailInput";
 import BulkEmailInput from "./recipients/BulkEmailInput";
-import FileUploadInput from "./recipients/FileUploadInput";
 import RecipientsTags from "./recipients/RecipientsTags";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { validateEmailList } from "@/utils/emailValidation";
@@ -83,13 +82,7 @@ const RecipientsList: React.FC<RecipientsListProps> = ({ recipients, setRecipien
         clearInvalidEmails={clearInvalidEmails}
       />
 
-      <FileUploadInput 
-        recipients={recipients} 
-        updateRecipients={updateRecipients}
-        clearInvalidEmails={clearInvalidEmails}
-      />
-
-      <RecipientsTags 
+      <RecipientsTags
         recipients={recipients} 
         removeRecipient={removeRecipient} 
       />
