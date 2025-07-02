@@ -1,5 +1,11 @@
 # Professional Email Sender
 
+[![Deploy Status](https://img.shields.io/badge/Deploy-LIVE-brightgreen)](https://personalized-email-sender.onrender.com)
+[![Render](https://img.shields.io/badge/Powered%20by-Render-brightgreen)](https://render.com)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/IrisGuard/personalized-email-sender)
+
+**🌐 LIVE APPLICATION:** [https://personalized-email-sender.onrender.com](https://personalized-email-sender.onrender.com)
+
 Εφαρμογή αποστολής επαγγελματικών email με React/TypeScript frontend και Node.js backend.
 
 ## 🚀 Quick Deploy
@@ -223,12 +229,12 @@ npm run build
 
 ## 🎉 Deployment Success Checklist
 
-- ✅ GitHub repository connected
-- ✅ Render service configured
-- ✅ Environment variables set
-- ✅ Auto-deploy enabled
-- ✅ Build successful
-- ✅ Application live
-- ✅ Email functionality working
+- ✅ **GitHub repository connected**
+- ✅ **Render service configured**
+- ✅ **Environment variables set**
+- ✅ **Auto-deploy enabled**
+- ✅ **Build successful**
+- ✅ **Application live**
+- ✅ **Email functionality working**
 
 **🌟 Your Professional Email Sender is now LIVE and ready for business!**
