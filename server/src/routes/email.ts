@@ -6,8 +6,35 @@ import { EmailQueue, EmailData } from '../services/emailQueue';
 
 const emailQueue = new EmailQueue();
 
+// Simple rate limiting - max 3 requests per minute per IP
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
 export const sendOfferEmails = async (req: Request, res: Response) => {
   try {
+    // Rate limiting check
+    const clientIP = req.ip || req.connection.remoteAddress || 'unknown';
+    const now = Date.now();
+    const minute = 60 * 1000; // 1 minute in milliseconds
+    
+    if (!rateLimitMap.has(clientIP)) {
+      rateLimitMap.set(clientIP, { count: 1, resetTime: now + minute });
+    } else {
+      const userData = rateLimitMap.get(clientIP)!;
+      if (now > userData.resetTime) {
+        // Reset the counter
+        userData.count = 1;
+        userData.resetTime = now + minute;
+      } else {
+        userData.count++;
+        if (userData.count > 3) {
+          return res.status(429).json({
+            success: false,
+            error: 'Πάρα πολλές αιτήσεις. Παρακαλώ περιμένετε 1 λεπτό.'
+          });
+        }
+      }
+    }
+
     let { recipients, subject, title, description, cta, imageUrl } = req.body;
     
     console.log('📥 Received request body:', req.body);

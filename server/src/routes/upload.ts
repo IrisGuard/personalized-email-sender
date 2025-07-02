@@ -20,7 +20,7 @@ export const uploadImage = async (req: Request, res: Response) => {
       .jpeg({ quality: 85 })
       .toFile(optimizedImagePath);
     
-    const imageUrl = `/uploads/optimized-${req.file.filename}`;
+    const imageUrl = `https://offerakrogonosinternationalgroup.eu/uploads/optimized-${req.file.filename}`;
     
     // Clean up original file
     fs.unlinkSync(req.file.path);

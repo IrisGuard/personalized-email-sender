@@ -199,6 +199,18 @@ export class EmailQueue {
             <p><strong>${config.company.name}</strong></p>
             <p>Για περισσότερες πληροφορίες επικοινωνήστε μαζί μας</p>
             
+            <!-- ΕΠΑΓΓΕΛΜΑΤΙΚΗ ΥΠΟΓΡΑΦΗ -->
+            <div style="margin-top: 20px; font-size: 14px; line-height: 1.6; text-align: left; background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+              <strong>ΟΜΙΛΟΣ ΕΤΑΙΡΕΙΩΝ</strong><br />
+              <strong>AKROGONOS INTERNATIONAL GROUP</strong><br />
+              ΧΟΝΔΡΙΚΟ ΕΜΠΟΡΙΟ - ΚΑΤΑΣΚΕΥΗ ΚΑΙ ΕΜΠΟΡΙΑ ΚΟΥΦΩΜΑΤΩΝ ΑΛΟΥΜΙΝΙΟΥ & PVC<br /><br />
+              <strong>ΚΕΝΤΡΙΚΟ:</strong> ΓΕΡΩΝΥΜΑΚΗ 104, ΠΑΤΕΛΕΣ, ΗΡΑΚΛΕΙΟ ΚΡΗΤΗΣ<br />
+              <strong>Τηλ:</strong> 00302811812735, 0030 2811812164<br />
+              <strong>Email:</strong> <a href="mailto:sale@energiakakoufomata-koufomatapvc.gr" style="color: #3498db; text-decoration: none;">sale@energiakakoufomata-koufomatapvc.gr</a><br />
+              <strong>ΠΕΙΡΑΙΑΣ:</strong> ΝΟΤΑΡΑ 117, Τηλ: 6939366243 – 6907793443<br />
+              <strong>Ιστοσελίδα:</strong> <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" target="_blank" style="color: #3498db; text-decoration: none;">www.energiakakoufomata-koufomatapvc.gr</a>
+            </div>
+            
             <!-- GDPR Compliance & Unsubscribe -->
             <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 12px; color: #888;">
               <p>Λαμβάνετε αυτό το email επειδή έχετε εκδηλώσει ενδιαφέρον για τις υπηρεσίες μας.</p>
