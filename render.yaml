@@ -3,7 +3,7 @@ services:
     name: personalized-email-sender
     env: node
     plan: free
-    buildCommand: npm install && npm run build && cd server && npm install && npm run build
+    buildCommand: npm install && npm run build
     startCommand: cd server && npm start
     envVars:
       - key: NODE_ENV
