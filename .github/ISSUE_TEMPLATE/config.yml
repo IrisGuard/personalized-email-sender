@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🌐 Live Application
+    url: https://personalized-email-sender.onrender.com
+    about: View the live application running on Render
+  - name: 📊 Render Dashboard
+    url: https://dashboard.render.com
+    about: Monitor deployment and application status
+  - name: 📧 Email Support
+    url: mailto:koufomataxondriki@gmail.com
+    about: Contact support for technical assistance 
