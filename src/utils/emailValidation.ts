@@ -3,6 +3,12 @@
  * Email validation utility functions
  */
 
+export interface EmailValidationResult {
+  email: string;
+  isValid: boolean;
+  error?: string;
+}
+
 /**
  * Validates an email address format with a more comprehensive regex
  * @param email - The email address to validate
@@ -15,6 +21,30 @@ export const validateEmail = (email: string): boolean => {
   // - Valid TLD (at least 2 characters)
   // - No consecutive dots
   return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(email);
+};
+
+/**
+ * Validates an email with detailed result
+ * @param email - The email address to validate
+ * @returns Detailed validation result
+ */
+export const validateEmailDetailed = (email: string): EmailValidationResult => {
+  const trimmedEmail = email.trim();
+  
+  if (!trimmedEmail) {
+    return { email: trimmedEmail, isValid: false, error: 'Empty email' };
+  }
+  
+  if (!trimmedEmail.includes('@')) {
+    return { email: trimmedEmail, isValid: false, error: 'Missing @ symbol' };
+  }
+  
+  const isValid = validateEmail(trimmedEmail);
+  return {
+    email: trimmedEmail,
+    isValid,
+    error: isValid ? undefined : 'Invalid email format'
+  };
 };
 
 /**

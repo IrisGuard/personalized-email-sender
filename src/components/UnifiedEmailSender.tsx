@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AIContentGenerator from './AIContentGenerator';
 import ImageUploadCard from './email/ImageUploadCard';
 import EmailContentForm from './email/EmailContentForm';
-import RecipientsInput from './email/RecipientsInput';
+import RecipientsList from './RecipientsList';
 import SendEmailSection from './email/SendEmailSection';
 import { OfferFormData, EmailStats } from '@/types/email';
 
@@ -22,12 +22,12 @@ const UnifiedEmailSender = () => {
   const [sending, setSending] = useState(false);
   const [uploadedImageUrl, setUploadedImageUrl] = useState('');
   const [emailStats, setEmailStats] = useState<EmailStats | null>(null);
+  
+  // Use recipients array instead of string for RecipientsList
+  const [recipients, setRecipients] = useState<string[]>([]);
 
-  // Calculate recipient count
-  const recipientCount = formData.recipients
-    .split(/[\n,;]/)
-    .map(email => email.trim())
-    .filter(email => email && email.includes('@')).length;
+  // Calculate recipient count from array
+  const recipientCount = recipients.length;
 
   const updateFormData = (field: keyof OfferFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -68,14 +68,13 @@ const UnifiedEmailSender = () => {
 
       <AIContentGenerator onContentGenerated={handleAIContent} />
 
-      <RecipientsInput
-        formData={formData}
-        updateFormData={updateFormData}
-        recipientCount={recipientCount}
+      <RecipientsList
+        recipients={recipients}
+        setRecipients={setRecipients}
       />
 
       <SendEmailSection
-        formData={formData}
+        formData={{...formData, recipients: recipients.join('\n')}}
         uploadedImageUrl={uploadedImageUrl}
         recipientCount={recipientCount}
         sending={sending}
