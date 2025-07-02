@@ -206,9 +206,9 @@ export class EmailQueue {
               ΧΟΝΔΡΙΚΟ ΕΜΠΟΡΙΟ - ΚΑΤΑΣΚΕΥΗ ΚΑΙ ΕΜΠΟΡΙΑ ΚΟΥΦΩΜΑΤΩΝ ΑΛΟΥΜΙΝΙΟΥ & PVC<br /><br />
               <strong>ΚΕΝΤΡΙΚΟ:</strong> ΓΕΡΩΝΥΜΑΚΗ 104, ΠΑΤΕΛΕΣ, ΗΡΑΚΛΕΙΟ ΚΡΗΤΗΣ<br />
               <strong>Τηλ:</strong> 00302811812735, 0030 2811812164<br />
-              <strong>Email:</strong> <a href="mailto:sale@energiakakoufomata-koufomatapvc.gr" style="color: #3498db; text-decoration: none;">sale@energiakakoufomata-koufomatapvc.gr</a><br />
               <strong>ΠΕΙΡΑΙΑΣ:</strong> ΝΟΤΑΡΑ 117, Τηλ: 6939366243 – 6907793443<br />
-              <strong>Ιστοσελίδα:</strong> <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" target="_blank" style="color: #3498db; text-decoration: none;">www.energiakakoufomata-koufomatapvc.gr</a>
+              <strong>Αρχική Σελίδα:</strong> <a href="https://www.energiakakoufomata-koufomatapvc.gr/" target="_blank" style="color: #3498db; text-decoration: none;">www.energiakakoufomata-koufomatapvc.gr</a><br />
+              <strong>Επικοινωνία:</strong> <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" target="_blank" style="color: #3498db; text-decoration: none;">www.energiakakoufomata-koufomatapvc.gr/epikoinonia</a>
             </div>
             
             <!-- GDPR Compliance & Unsubscribe -->
@@ -220,7 +220,8 @@ export class EmailQueue {
               </p>
               <p style="margin-top: 10px;">
                 ${config.company.name}<br>
-                Email: ${config.company.replyTo}
+                Email: ${config.company.replyTo}<br>
+                Email: sale@energiakakoufomata-koufomatapvc.gr
               </p>
             </div>
           </div>
