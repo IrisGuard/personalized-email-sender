@@ -1,0 +1,6 @@
+name: production
+url: https://personalized-email-sender.onrender.com
+description: "Live Production Environment on Render"
+deployment_branch_policy:
+  protected_branches: true
+  custom_branch_policies: false 

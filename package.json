@@ -1,7 +1,16 @@
 {
   "name": "personalized-email-sender",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Professional Email Sender - Εφαρμογή αποστολής επαγγελματικών email με React/TypeScript frontend και Node.js backend",
+  "homepage": "https://personalized-email-sender.onrender.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IrisGuard/personalized-email-sender.git"
+  },
+  "keywords": ["email", "sender", "react", "typescript", "nodejs", "render", "gmail", "smtp"],
+  "author": "AKROGONOS INTERNATIONAL GROUP",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "npm run build:frontend && npm run build:backend",
