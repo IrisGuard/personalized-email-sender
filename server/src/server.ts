@@ -33,12 +33,19 @@ app.post('/upload', upload.single('image'), uploadImage);
 // Serve static uploaded images
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Static files for production build
-app.use(express.static(path.join(__dirname, '../../dist')));
+// Static files for production build - serve React app
+app.use(express.static(path.join(__dirname, '../../dist'), {
+  fallthrough: false,
+  index: 'index.html'
+}));
 
-// Serve React app για production
+// Serve React app για production - catch all route
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../dist/index.html'));
+  if (!req.path.startsWith('/api') && !req.path.startsWith('/health') && !req.path.startsWith('/send-offer-emails') && !req.path.startsWith('/upload')) {
+    res.sendFile(path.join(__dirname, '../../dist/index.html'));
+  } else {
+    res.status(404).json({ error: 'API endpoint not found' });
+  }
 });
 
 // Start server

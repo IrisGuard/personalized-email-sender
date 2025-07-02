@@ -5,7 +5,6 @@ services:
     plan: free
     buildCommand: npm install && npm run build && cd server && npm install && npm run build
     startCommand: cd server && npm start
-    staticPublishPath: ./dist
     envVars:
       - key: NODE_ENV
         value: production

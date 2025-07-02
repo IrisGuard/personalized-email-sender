@@ -79,7 +79,7 @@ git push origin main --force-with-lease
 
 # Trigger Render deployment
 print_status "Triggering Render deployment..."
-curl -X POST "https://api.render.com/deploy/srv-d1f6rtvgi27c73cfkvt0?key=sviLo3YSBS8"
+curl -X POST "https://api.render.com/deploy/srv-d1f6rtvgi27c73cfkvt0?key=sviLo3YSBS8" -H "Content-Type: application/json"
 
 if [ $? -eq 0 ]; then
     print_status "✅ Deployment triggered successfully!"

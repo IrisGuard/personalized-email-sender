@@ -86,7 +86,7 @@ git push origin main --force-with-lease
 # Trigger Render deployment
 Write-Status "Triggering Render deployment..."
 try {
-    $response = Invoke-WebRequest -Uri "https://api.render.com/deploy/srv-d1f6rtvgi27c73cfkvt0?key=sviLo3YSBS8" -Method POST
+    $response = Invoke-WebRequest -Uri "https://api.render.com/deploy/srv-d1f6rtvgi27c73cfkvt0?key=sviLo3YSBS8" -Method POST -ContentType "application/json"
     
     if ($response.StatusCode -eq 200) {
         Write-Status "✅ Deployment triggered successfully!"
