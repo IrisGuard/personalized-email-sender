@@ -8,11 +8,18 @@ const emailQueue = new EmailQueue();
 
 export const sendOfferEmails = async (req: Request, res: Response) => {
   try {
-    let { recipients, subject, title, description, cta } = req.body;
+    let { recipients, subject, title, description, cta, imageUrl } = req.body;
     
-    // Parse recipients if it's a string
-    if (typeof recipients === 'string') {
-      recipients = recipients.split(',').map(email => email.trim());
+    console.log('📥 Received request body:', req.body);
+    console.log('🖼️ Image URL from request:', imageUrl);
+    console.log('📨 Recipients received:', recipients);
+    
+    // Handle recipients array (already parsed from frontend)
+    if (!Array.isArray(recipients)) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Recipients must be an array' 
+      });
     }
 
     // Validate recipients
@@ -21,6 +28,8 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
       return emailRegex.test(email);
     });
 
+    console.log('✅ Valid emails found:', validEmails.length);
+
     if (validEmails.length === 0) {
       return res.status(400).json({ 
         success: false, 
@@ -28,24 +37,12 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
       });
     }
 
-    let imageUrl = '';
-    
-    // Process uploaded image
-    if (req.file) {
-      const optimizedImagePath = path.join(path.dirname(req.file.path), 'optimized-' + req.file.filename);
-      
-      // Optimize image with Sharp
-      await sharp(req.file.path)
-        .resize(800, 600, { fit: 'inside', withoutEnlargement: true })
-        .jpeg({ quality: 85 })
-        .toFile(optimizedImagePath);
-      
-      // For production, you would upload to a CDN or cloud storage
-      // For now, we'll use the local path (not ideal for production)
-      imageUrl = `/uploads/optimized-${req.file.filename}`;
-      
-      // Clean up original file
-      fs.unlinkSync(req.file.path);
+    // Use imageUrl from request (image already uploaded via /upload endpoint)
+    if (!imageUrl) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Image URL is required' 
+      });
     }
 
     // Create email data
@@ -61,12 +58,15 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
     // Add to queue for processing
     emailQueue.add(emailData);
 
+    console.log('🚀 Emails successfully added to queue');
+    
     res.json({
       success: true,
       message: 'Emails added to queue successfully',
       validEmails: validEmails.length,
       totalEmails: recipients.length,
-      imageUploaded: !!req.file
+      estimatedTime: `${validEmails.length * 2} λεπτά`,
+      imageUploaded: true
     });
 
   } catch (error) {

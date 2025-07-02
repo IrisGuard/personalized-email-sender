@@ -27,7 +27,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Routes
 app.get('/health', healthCheck);
-app.post('/send-offer-emails', upload.single('image'), sendOfferEmails);
+app.post('/send-offer-emails', sendOfferEmails);
 app.post('/upload', upload.single('image'), uploadImage);
 
 // Serve static uploaded images
