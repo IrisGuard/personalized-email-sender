@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { OfferFormData } from '@/types/email';
 
 interface EmailContentFormProps {
@@ -14,6 +15,24 @@ const EmailContentForm: React.FC<EmailContentFormProps> = ({
   formData,
   updateFormData,
 }) => {
+  const subjectOptions = [
+    'Ειδική Προσφορά',
+    'Νέα Προσφορά',
+    'Περιορισμένη Διαθεσιμότητα',
+    'Προσφορά Ημέρας',
+    'Έκπτωση έως και -50%',
+    'Μην τη χάσετε!'
+  ];
+
+  const titleOptions = [
+    'Μοναδική προσφορά μόνο για σήμερα',
+    'Ανακαλύψτε τις νέες τιμές μας',
+    'Αποκλειστική προσφορά για εσάς',
+    'Επωφεληθείτε τώρα – ισχύει για λίγες μέρες',
+    'Έκπτωση περιορισμένου χρόνου',
+    'Ισχύει μέχρι εξαντλήσεως αποθεμάτων'
+  ];
+
   return (
     <Card>
       <CardHeader>
@@ -22,22 +41,34 @@ const EmailContentForm: React.FC<EmailContentFormProps> = ({
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="subject">Θέμα Email *</Label>
-          <Input
-            id="subject"
-            value={formData.subject}
-            onChange={(e) => updateFormData('subject', e.target.value)}
-            placeholder="π.χ. Ειδική Προσφορά"
-          />
+          <Select value={formData.subject} onValueChange={(value) => updateFormData('subject', value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Επιλέξτε θέμα email" />
+            </SelectTrigger>
+            <SelectContent>
+              {subjectOptions.map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         
         <div className="space-y-2">
           <Label htmlFor="title">Τίτλος Προσφοράς *</Label>
-          <Input
-            id="title"
-            value={formData.title}
-            onChange={(e) => updateFormData('title', e.target.value)}
-            placeholder="π.χ. Νέα Προσφορά"
-          />
+          <Select value={formData.title} onValueChange={(value) => updateFormData('title', value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Επιλέξτε τίτλο προσφοράς" />
+            </SelectTrigger>
+            <SelectContent>
+              {titleOptions.map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="space-y-2">
