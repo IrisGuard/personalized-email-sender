@@ -40,8 +40,14 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
           }
         },
         onwarn(warning: any, warn: any) {
+          // Suppress all common development warnings
           if (warning.code === 'MODULE_LEVEL_DIRECTIVE') return;
           if (warning.code === 'EVAL') return;
+          if (warning.code === 'CIRCULAR_DEPENDENCY') return;
+          if (warning.code === 'UNUSED_EXTERNAL_IMPORT') return;
+          if (warning.code === 'THIS_IS_UNDEFINED') return;
+          if (warning.message?.includes('Use of eval')) return;
+          if (warning.message?.includes('Browserslist')) return;
           warn(warning);
         }
       }

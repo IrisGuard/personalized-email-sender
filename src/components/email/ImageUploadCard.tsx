@@ -148,16 +148,16 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
           )}
           
           {uploadedImageUrl && (
-            <Alert className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 dark:from-green-900/30 dark:to-emerald-900/30 dark:border-green-500 shadow-lg">
-              <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
-              <AlertDescription className="text-green-800 dark:text-green-200 font-bold text-lg">
-                🎉 ΕΠΙΤΥΧΙΑ! Εικόνα Ανέβηκε Σωστά!
+            <Alert className="bg-gradient-to-r from-green-100 to-emerald-100 border-4 border-green-500 dark:from-green-900/50 dark:to-emerald-900/50 dark:border-green-400 shadow-xl animate-fade-in">
+              <CheckCircle className="h-8 w-8 text-green-700 dark:text-green-300" />
+              <AlertDescription className="text-green-900 dark:text-green-100 font-extrabold text-xl">
+                🎉 ΕΠΙΤΥΧΙΑ! Εικόνα Ανέβηκε Σωστά! ✅
                 <br />
-                <span className="text-base font-semibold text-green-700 dark:text-green-300">
-                  ✅ Έτοιμη για αποστολή στα emails - Συνεχίστε με την αποστολή!
+                <span className="text-lg font-bold text-green-800 dark:text-green-200 bg-green-200 dark:bg-green-800 px-2 py-1 rounded-md inline-block mt-2">
+                  ✅ ΕΤΟΙΜΗ ΓΙΑ ΑΠΟΣΤΟΛΗ! Συνεχίστε με την αποστολή!
                 </span>
                 <br />
-                <span className="text-sm opacity-90 font-medium">
+                <span className="text-base font-semibold text-green-700 dark:text-green-300 mt-2 block">
                   📷 Αρχείο: {uploadedImageUrl.split('/').pop()}
                 </span>
               </AlertDescription>
