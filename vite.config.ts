@@ -1,9 +1,9 @@
-import { defineConfig, PluginOption } from "vite";
+import { defineConfig, PluginOption, UserConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
 // https://vitejs.dev/config/
-export default defineConfig(async ({ mode }) => {
+export default defineConfig(async ({ mode }): Promise<UserConfig> => {
   const plugins: PluginOption[] = [react()];
   
   // Only add lovable-tagger in development mode
@@ -30,12 +30,19 @@ export default defineConfig(async ({ mode }) => {
     build: {
       outDir: 'dist',
       sourcemap: false,
+      target: 'esnext',
+      minify: 'esbuild',
       rollupOptions: {
         output: {
           manualChunks: {
             vendor: ['react', 'react-dom', 'react-router-dom'],
             ui: ['lucide-react', '@radix-ui/react-tabs']
           }
+        },
+        onwarn(warning: any, warn: any) {
+          if (warning.code === 'MODULE_LEVEL_DIRECTIVE') return;
+          if (warning.code === 'EVAL') return;
+          warn(warning);
         }
       }
     },
