@@ -22,29 +22,15 @@ const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children }) => 
   const CORRECT_PASSWORD = 'AIG2024';
 
   useEffect(() => {
-    console.log('🔒 PasswordProtection: Checking authentication...');
+    console.log('🔒 PasswordProtection: NO PERSISTENT SESSION - FRESH LOGIN REQUIRED');
     
-    // Check if already authenticated
-    const auth = localStorage.getItem('aig_auth');
-    const authTime = localStorage.getItem('aig_auth_time');
-    
-    if (auth === 'authenticated' && authTime) {
-      // Check if session is still valid (24 hours)
-      const sessionAge = Date.now() - parseInt(authTime);
-      const maxAge = 24 * 60 * 60 * 1000; // 24 hours
-      
-      if (sessionAge < maxAge) {
-        console.log('🔒 Valid session found, authenticating user');
-        setIsAuthenticated(true);
-      } else {
-        console.log('🔒 Session expired, clearing auth');
-        localStorage.removeItem('aig_auth');
-        localStorage.removeItem('aig_auth_time');
-      }
-    }
+    // SECURITY: No localStorage check - always require fresh login
+    // Clear any existing auth data to ensure clean state
+    localStorage.removeItem('aig_auth');
+    localStorage.removeItem('aig_auth_time');
     
     setLoading(false);
-    console.log('🔒 Authentication check complete');
+    console.log('🔒 MAXIMUM SECURITY: Fresh authentication required every time');
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -52,22 +38,28 @@ const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children }) => 
     console.log('🔒 Login attempt with username and password');
     
     if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
-      console.log('🔒 ✅ CORRECT CREDENTIALS - GRANTING ACCESS');
+      console.log('🔒 ✅ CORRECT CREDENTIALS - SESSION-ONLY ACCESS GRANTED');
       setIsAuthenticated(true);
-      localStorage.setItem('aig_auth', 'authenticated');
-      localStorage.setItem('aig_auth_time', Date.now().toString());
       setError('');
       
-      // Force a page refresh to ensure clean state
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
+      // NO localStorage - session only for this tab/window
+      console.log('🔒 SECURITY: No persistent storage - logout on tab close');
     } else {
       console.log('🔒 ❌ INVALID CREDENTIALS ATTEMPT');
       setError('Λάθος όνομα χρήστη ή κωδικός πρόσβασης - Μόνο εξουσιοδοτημένο προσωπικό');
       setUsername('');
       setPassword('');
     }
+  };
+
+  // Add logout function to pass to children
+  const logout = () => {
+    console.log('🔒 LOGOUT: Clearing authentication state');
+    setIsAuthenticated(false);
+    setUsername('');
+    setPassword('');
+    localStorage.removeItem('aig_auth');
+    localStorage.removeItem('aig_auth_time');
   };
 
   if (loading) {
@@ -143,7 +135,16 @@ const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children }) => 
     );
   }
 
-  return <>{children}</>;
+  return (
+    <div>
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, { logout } as any);
+        }
+        return child;
+      })}
+    </div>
+  );
 };
 
 export default PasswordProtection;
