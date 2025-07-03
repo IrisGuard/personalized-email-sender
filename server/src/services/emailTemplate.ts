@@ -4,7 +4,7 @@ import { EmailData } from '../types/email';
 export class EmailTemplate {
   static generateHTML(emailData: EmailData, recipient: string): string {
     const unsubscribeToken = Buffer.from(recipient).toString('base64');
-    const unsubscribeUrl = `mailto:unsubscribe+${unsubscribeToken}@${config.gmail.user.split('@')[1]}?subject=Unsubscribe`;
+    const unsubscribeUrl = `mailto:unsubscribe+${unsubscribeToken}@${config.company.senderEmail.split('@')[1]}?subject=Unsubscribe`;
     
     return `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9f9f9; padding: 20px;">
