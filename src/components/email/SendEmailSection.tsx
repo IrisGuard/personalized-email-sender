@@ -32,7 +32,8 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
   const sendEmails = async () => {
     console.log('🚀 SendEmails called with formData:', formData);
     console.log('📨 Recipients count:', recipientCount);
-    console.log('🖼️ Image URL:', uploadedImageUrl);
+    console.log('🖼️ Image URL from props:', uploadedImageUrl);
+    console.log('🔍 Full formData object:', JSON.stringify(formData, null, 2));
     
     // Validation
     if (!uploadedImageUrl) {

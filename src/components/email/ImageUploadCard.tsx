@@ -53,20 +53,25 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
       return;
     }
 
+    console.log('🚀 Starting image upload:', selectedImage.name);
     setUploading(true);
     const uploadFormData = new FormData();
     uploadFormData.append('image', selectedImage);
 
     try {
+      console.log('📡 Making upload request to:', `${API_BASE_URL}/upload`);
       const response = await fetch(`${API_BASE_URL}/upload`, {
         method: 'POST',
         body: uploadFormData,
       });
 
+      console.log('📥 Upload response status:', response.status);
       const data = await response.json();
+      console.log('📦 Upload response data:', data);
 
       if (data.success) {
         setUploadedImageUrl(data.imageUrl);
+        console.log('✅ Upload successful, image URL set:', data.imageUrl);
         toast({
           title: 'Επιτυχής ανέβασμα! ✅',
           description: `Η εικόνα "${data.originalName}" ανέβηκε με επιτυχία`,
@@ -75,7 +80,7 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
         throw new Error(data.error || 'Upload failed');
       }
     } catch (error) {
-      console.error('Upload error:', error);
+      console.error('❌ Upload error:', error);
       toast({
         title: 'Σφάλμα ανεβάσματος',
         description: error instanceof Error ? error.message : 'Αποτυχία ανεβάσματος εικόνας',
