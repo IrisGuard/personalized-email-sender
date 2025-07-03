@@ -51,6 +51,7 @@ export const sendEmails = async ({
       subject,
       title: subject,
       description: `${message}\n\n${signature}`,
+      price: '', // This service doesn't use price field
       cta: 'Επικοινωνήστε μαζί μας'
     };
 

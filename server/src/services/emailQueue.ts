@@ -7,6 +7,7 @@ export interface EmailData {
   subject: string;
   title: string;
   description: string;
+  price?: string;
   cta?: string;
   imageUrl?: string;
 }
@@ -186,6 +187,12 @@ export class EmailQueue {
             ${emailData.description.replace(/\n/g, '<br>')}
           </div>
           
+          ${emailData.price ? `
+            <div style="background-color: #e8f5e8; border: 1px solid #c3e6c3; border-radius: 8px; padding: 15px; margin: 20px 0; text-align: center;">
+              <strong style="color: #2c5530; font-size: 18px;">Τιμή (χωρίς Φ.Π.Α.): ${emailData.price}</strong>
+            </div>
+          ` : ''}
+          
           ${emailData.cta ? `
             <div style="text-align: center; margin: 30px 0;">
               <a href="mailto:${config.company.replyTo}" 
@@ -202,13 +209,30 @@ export class EmailQueue {
             <!-- ΕΠΑΓΓΕΛΜΑΤΙΚΗ ΥΠΟΓΡΑΦΗ -->
             <div style="margin-top: 20px; font-size: 14px; line-height: 1.6; text-align: left; background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
               <strong>ΟΜΙΛΟΣ ΕΤΑΙΡΕΙΩΝ</strong><br />
-              <strong>AKROGONOS INTERNATIONAL GROUP</strong><br />
-              ΧΟΝΔΡΙΚΟ ΕΜΠΟΡΙΟ - ΚΑΤΑΣΚΕΥΗ ΚΑΙ ΕΜΠΟΡΙΑ ΚΟΥΦΩΜΑΤΩΝ ΑΛΟΥΜΙΝΙΟΥ & PVC<br /><br />
-              <strong>ΚΕΝΤΡΙΚΟ:</strong> ΓΕΡΩΝΥΜΑΚΗ 104, ΠΑΤΕΛΕΣ, ΗΡΑΚΛΕΙΟ ΚΡΗΤΗΣ<br />
-              <strong>Τηλ:</strong> 00302811812735, 0030 2811812164<br />
-              <strong>ΠΕΙΡΑΙΑΣ:</strong> ΝΟΤΑΡΑ 117, Τηλ: 6939366243 – 6907793443<br />
-              <strong>Αρχική Σελίδα:</strong> <a href="https://www.energiakakoufomata-koufomatapvc.gr/" target="_blank" style="color: #3498db; text-decoration: none;">www.energiakakoufomata-koufomatapvc.gr</a><br />
-              <strong>Επικοινωνία:</strong> <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" target="_blank" style="color: #3498db; text-decoration: none;">www.energiakakoufomata-koufomatapvc.gr/epikoinonia</a>
+              <strong>AKROGONOS INTERNATIONAL GROUP / H.P.G</strong><br />
+              <strong>INTERNATIONAL ENERGY CO / EUROPLAST GROUP</strong><br />
+              ΑΘΗΝΑ - ΠΕΙΡΑΙΑ - ΚΡΗΤΗ - ΒΟΥΛΓΑΡΙΑ – ΑΝΤΙΠΡΟΣΩΠΕΙΕΣ / ΕΙΣΑΓΩΓΕΣ – ΕΞΑΓΩΓΕΣ<br /><br />
+              
+              <strong>Γραφείο Εξαγωγών – Πειραιά Νόταρα 117</strong><br />
+              📧 <a href="mailto:imports@energiakakoufomata-koufomatapvc.gr" style="color: #3498db; text-decoration: none;">imports@energiakakoufomata-koufomatapvc.gr</a><br />
+              📧 <a href="mailto:export@energiakakoufomata-koufomatapvc.gr" style="color: #3498db; text-decoration: none;">export@energiakakoufomata-koufomatapvc.gr</a><br /><br />
+              
+              <strong>Γραφείο Ηράκλειο Κρήτης Σεφέρη 5</strong><br />
+              Τηλ: 2811117934 – 6939366243<br />
+              📧 <a href="mailto:paragelies@energiakakoufomata-koufomatapvc.gr" style="color: #3498db; text-decoration: none;">paragelies@energiakakoufomata-koufomatapvc.gr</a><br /><br />
+              
+              <strong>Γραφεία Ηράκλειο Κρήτης Γερωνυμάκη 104 – ΠΑΤΕΛΕΣ</strong><br />
+              Τηλ: 2811812735 – 6907793443<br />
+              📧 <a href="mailto:sale@energiakakoufomata-koufomatapvc.gr" style="color: #3498db; text-decoration: none;">sale@energiakakoufomata-koufomatapvc.gr</a><br />
+              📧 <a href="mailto:koufomata.pvc@gmail.com" style="color: #3498db; text-decoration: none;">koufomata.pvc@gmail.com</a><br /><br />
+              
+              <strong>Γραφεία Ηράκλειο Κρήτης Ολούντος 34</strong><br />
+              Τηλ: 2811812736<br />
+              📧 <a href="mailto:prosfores@energiakakoufomata-koufomatapvc.gr" style="color: #3498db; text-decoration: none;">prosfores@energiakakoufomata-koufomatapvc.gr</a><br /><br />
+              
+              📧 <a href="mailto:pvc.laminate@gmail.com" style="color: #3498db; text-decoration: none;">pvc.laminate@gmail.com</a><br />
+              🌐 Website: <a href="https://www.energiakakoufomata-koufomatapvc.gr/" target="_blank" style="color: #3498db; text-decoration: none;">www.energiakakoufomata-koufomatapvc.gr</a><br />
+              🔗 Επικοινωνία: <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" target="_blank" style="color: #3498db; text-decoration: none;">www.energiakakoufomata-koufomatapvc.gr/epikoinonia</a>
             </div>
             
             <!-- GDPR Compliance & Unsubscribe -->
