@@ -12,11 +12,13 @@ interface PasswordProtectionProps {
 
 const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // Correct password - τα αρχικά της εταιρείας
+  // Correct credentials
+  const CORRECT_USERNAME = 'haris77';
   const CORRECT_PASSWORD = 'AIG2024';
 
   useEffect(() => {
@@ -47,10 +49,10 @@ const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children }) => 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('🔒 Login attempt with password');
+    console.log('🔒 Login attempt with username and password');
     
-    if (password === CORRECT_PASSWORD) {
-      console.log('🔒 ✅ CORRECT PASSWORD - GRANTING ACCESS');
+    if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
+      console.log('🔒 ✅ CORRECT CREDENTIALS - GRANTING ACCESS');
       setIsAuthenticated(true);
       localStorage.setItem('aig_auth', 'authenticated');
       localStorage.setItem('aig_auth_time', Date.now().toString());
@@ -61,8 +63,9 @@ const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children }) => 
         window.location.reload();
       }, 500);
     } else {
-      console.log('🔒 ❌ INVALID PASSWORD ATTEMPT');
-      setError('Λάθος κωδικός πρόσβασης - Μόνο εξουσιοδοτημένο προσωπικό');
+      console.log('🔒 ❌ INVALID CREDENTIALS ATTEMPT');
+      setError('Λάθος όνομα χρήστη ή κωδικός πρόσβασης - Μόνο εξουσιοδοτημένο προσωπικό');
+      setUsername('');
       setPassword('');
     }
   };
@@ -95,6 +98,19 @@ const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children }) => 
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
+                <Label htmlFor="username">Όνομα Χρήστη</Label>
+                <Input
+                  id="username"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Εισάγετε το όνομα χρήστη"
+                  required
+                  autoFocus
+                />
+              </div>
+
+              <div className="space-y-2">
                 <Label htmlFor="password">Κωδικός Πρόσβασης</Label>
                 <Input
                   id="password"
@@ -103,7 +119,6 @@ const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children }) => 
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Εισάγετε τον κωδικό"
                   required
-                  autoFocus
                 />
               </div>
 
