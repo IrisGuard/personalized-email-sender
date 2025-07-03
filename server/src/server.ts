@@ -19,12 +19,16 @@ app.use(cors({
     'http://localhost:8080',
     'https://personalized-email-sender.onrender.com',
     'https://offerakrogonosinternationalgroup.eu',
+    'http://offerakrogonosinternationalgroup.eu',
     /^https:\/\/.*\.lovableproject\.com$/,
     /^https:\/\/.*\.lovable\.app$/
   ],
-  credentials: true,
+  credentials: false,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+  preflightContinue: false,
+  optionsSuccessStatus: 200
 }));
 
 app.use(express.json({ limit: '50mb' }));

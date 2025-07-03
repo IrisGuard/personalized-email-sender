@@ -35,6 +35,22 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
     console.log('🖼️ Image URL from props:', uploadedImageUrl);
     console.log('🔍 Full formData object:', JSON.stringify(formData, null, 2));
     
+    // Check backend health first
+    const healthCheck = await fetch(`${API_BASE_URL}/health`, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' },
+      mode: 'cors',
+    }).catch(() => null);
+    
+    if (!healthCheck || !healthCheck.ok) {
+      toast({
+        title: 'Σφάλμα σύνδεσης',
+        description: 'Ο server δεν είναι διαθέσιμος. Παρακαλώ δοκιμάστε ξανά.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    
     // Validation
     if (!uploadedImageUrl) {
       toast({
@@ -82,7 +98,10 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
+        mode: 'cors',
+        credentials: 'omit',
         body: JSON.stringify({
           ...formData,
           recipients,

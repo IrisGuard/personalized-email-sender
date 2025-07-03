@@ -2,10 +2,14 @@ import React from "react";
 import Header from "@/components/Header";
 import UnifiedEmailSender from "@/components/UnifiedEmailSender";
 
-const Index = () => {
+interface IndexProps {
+  logout?: () => void;
+}
+
+const Index: React.FC<IndexProps> = ({ logout }) => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Header />
+      <Header logout={logout} />
       <main className="flex-1 container mx-auto px-4 py-6 md:py-10">
         <UnifiedEmailSender />
       </main>

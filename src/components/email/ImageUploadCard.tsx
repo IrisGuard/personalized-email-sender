@@ -55,6 +55,24 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
 
     console.log('🚀 Starting image upload:', selectedImage.name);
     setUploading(true);
+    
+    // Check backend health first
+    const healthCheck = await fetch(`${API_BASE_URL}/health`, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' },
+      mode: 'cors',
+    }).catch(() => null);
+    
+    if (!healthCheck || !healthCheck.ok) {
+      toast({
+        title: 'Σφάλμα σύνδεσης',
+        description: 'Ο server δεν είναι διαθέσιμος. Παρακαλώ δοκιμάστε ξανά.',
+        variant: 'destructive',
+      });
+      setUploading(false);
+      return;
+    }
+    
     const uploadFormData = new FormData();
     uploadFormData.append('image', selectedImage);
 
@@ -67,6 +85,7 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
           'Accept': 'application/json',
         },
         mode: 'cors',
+        credentials: 'omit',
       });
 
       console.log('📥 Upload response status:', response.status);
@@ -123,7 +142,7 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
               type="file"
               accept="image/*,application/pdf,.doc,.docx"
               onChange={handleImageSelect}
-              className="flex-1"
+              className="flex-1 cursor-pointer file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
             />
             <Button
               onClick={uploadImage}
