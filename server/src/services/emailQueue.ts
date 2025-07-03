@@ -1,4 +1,5 @@
 import { createTransporter } from '../services/email';
+import { sendGridService } from '../services/sendgrid';
 import { config } from '../config/environment';
 import { EmailData, EmailStatus, RetryQueueItem } from '../types/email';
 import { EmailTemplate } from './emailTemplate';
@@ -42,10 +43,10 @@ export class EmailQueue {
       const emailData = this.queue.shift();
       if (emailData) {
         await this.sendEmailBatch(emailData);
-        // Anti-spam rate limiting: 120 seconds (2 minutes) between batches
+        // SendGrid optimized rate limiting: 60 seconds between batches
         if (this.queue.length > 0) {
-          console.log(`⏳ Waiting 2 minutes before next batch...`);
-          await this.delay(120000);
+          console.log(`⏳ Waiting 1 minute before next batch...`);
+          await this.delay(60000);
         }
       }
     }
@@ -63,9 +64,9 @@ export class EmailQueue {
         console.log(`🔄 Retrying email to ${retryItem.email} (attempt ${retryItem.attempts + 1}/3)`);
         await this.sendSingleEmail(retryItem.emailData, retryItem.email, retryItem.attempts + 1);
         
-        // Wait 2 minutes between retries
+        // Wait 1 minute between retries
         if (this.retryQueue.length > 0) {
-          await this.delay(120000);
+          await this.delay(60000);
         }
       }
     }
@@ -75,10 +76,10 @@ export class EmailQueue {
     for (const recipient of emailData.recipients) {
       await this.sendSingleEmail(emailData, recipient, 0);
       
-      // 2 minutes between individual emails in the same batch
+      // 30 seconds between individual emails in the same batch (SendGrid optimized)
       if (emailData.recipients.indexOf(recipient) < emailData.recipients.length - 1) {
-        console.log(`⏳ Waiting 2 minutes before next email...`);
-        await this.delay(120000);
+        console.log(`⏳ Waiting 30 seconds before next email...`);
+        await this.delay(30000);
       }
     }
   }
@@ -93,25 +94,39 @@ export class EmailQueue {
         lastTried: new Date()
       });
 
-      const transporter = createTransporter();
-      const messageId = `<${Date.now()}-${Math.random().toString(36).substr(2, 9)}@${config.gmail.user.split('@')[1]}>`;
-      
-      await transporter.sendMail({
-        from: `"${config.company.name}" <${config.gmail.user}>`,
-        to: recipient,
-        subject: emailData.subject,
-        html: EmailTemplate.generateHTML(emailData, recipient),
-        replyTo: config.company.replyTo,
-        // Anti-spam headers
-        headers: {
-          'Message-ID': messageId,
-          'X-Mailer': 'Professional Email Sender v1.0',
-          'List-Unsubscribe': `<mailto:unsubscribe+${Buffer.from(recipient).toString('base64')}@${config.gmail.user.split('@')[1]}>`,
-          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
-          'X-Auto-Response-Suppress': 'All',
-          'Precedence': 'bulk'
-        }
-      });
+      // Use SendGrid if available, fallback to Gmail SMTP
+      if (config.sendgrid.apiKey) {
+        await sendGridService.sendEmail({
+          to: recipient,
+          subject: emailData.subject,
+          html: EmailTemplate.generateHTML(emailData, recipient),
+          from: `"${config.company.name}" <${config.company.senderEmail}>`,
+          replyTo: config.company.replyTo
+        });
+        console.log(`✅ Email sent via SendGrid to ${recipient} at ${new Date().toISOString()}`);
+      } else {
+        // Fallback to Gmail SMTP
+        const transporter = createTransporter();
+        const messageId = `<${Date.now()}-${Math.random().toString(36).substr(2, 9)}@${config.gmail.user.split('@')[1]}>`;
+        
+        await transporter.sendMail({
+          from: `"${config.company.name}" <${config.gmail.user}>`,
+          to: recipient,
+          subject: emailData.subject,
+          html: EmailTemplate.generateHTML(emailData, recipient),
+          replyTo: config.company.replyTo,
+          // Anti-spam headers
+          headers: {
+            'Message-ID': messageId,
+            'X-Mailer': 'Professional Email Sender v1.0',
+            'List-Unsubscribe': `<mailto:unsubscribe+${Buffer.from(recipient).toString('base64')}@${config.gmail.user.split('@')[1]}>`,
+            'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+            'X-Auto-Response-Suppress': 'All',
+            'Precedence': 'bulk'
+          }
+        });
+        console.log(`✅ Email sent via Gmail SMTP to ${recipient} at ${new Date().toISOString()}`);
+      }
       
       // Update status to SENT
       this.emailStatuses.set(recipient, {
@@ -121,7 +136,7 @@ export class EmailQueue {
         lastTried: new Date()
       });
       
-      console.log(`✅ Email sent to ${recipient} at ${new Date().toISOString()} (attempt ${attemptNumber + 1})`);
+      console.log(`✅ Email delivery confirmed for ${recipient} (attempt ${attemptNumber + 1})`);
       
     } catch (error) {
       console.error(`❌ Error sending email to ${recipient}:`, error);

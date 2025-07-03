@@ -57,6 +57,7 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@sendgrid/mail": "^8.1.5",
     "@types/node": "^20.19.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
