@@ -63,6 +63,9 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
       const response = await fetch(`${API_BASE_URL}/upload`, {
         method: 'POST',
         body: uploadFormData,
+        headers: {
+          'Accept': 'application/json',
+        },
       });
 
       console.log('📥 Upload response status:', response.status);

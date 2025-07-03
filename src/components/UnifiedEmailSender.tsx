@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import AIContentGenerator from './AIContentGenerator';
 import ImageUploadCard from './email/ImageUploadCard';
 import EmailContentForm from './email/EmailContentForm';
 import RecipientsList from './RecipientsList';
@@ -66,7 +65,7 @@ const UnifiedEmailSender = () => {
         />
       </div>
 
-      <AIContentGenerator onContentGenerated={handleAIContent} />
+      
 
       <RecipientsList
         recipients={recipients}
