@@ -1,4 +1,4 @@
-import { createTransporter } from '../services/email';
+// Gmail transporter removed - SendGrid only
 import { sendGridService } from '../services/sendgrid';
 import { config } from '../config/environment';
 import { EmailData, EmailStatus, RetryQueueItem } from '../types/email';
@@ -94,39 +94,19 @@ export class EmailQueue {
         lastTried: new Date()
       });
 
-      // Use SendGrid if available, fallback to Gmail SMTP
-      if (config.sendgrid.apiKey) {
-        await sendGridService.sendEmail({
-          to: recipient,
-          subject: emailData.subject,
-          html: EmailTemplate.generateHTML(emailData, recipient),
-          from: `"${config.company.name}" <${config.company.senderEmail}>`,
-          replyTo: config.company.replyTo
-        });
-        console.log(`✅ Email sent via SendGrid to ${recipient} at ${new Date().toISOString()}`);
-      } else {
-        // Fallback to Gmail SMTP
-        const transporter = createTransporter();
-        const messageId = `<${Date.now()}-${Math.random().toString(36).substr(2, 9)}@${config.gmail.user.split('@')[1]}>`;
-        
-        await transporter.sendMail({
-          from: `"${config.company.name}" <${config.gmail.user}>`,
-          to: recipient,
-          subject: emailData.subject,
-          html: EmailTemplate.generateHTML(emailData, recipient),
-          replyTo: config.company.replyTo,
-          // Anti-spam headers
-          headers: {
-            'Message-ID': messageId,
-            'X-Mailer': 'Professional Email Sender v1.0',
-            'List-Unsubscribe': `<mailto:unsubscribe+${Buffer.from(recipient).toString('base64')}@${config.gmail.user.split('@')[1]}>`,
-            'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
-            'X-Auto-Response-Suppress': 'All',
-            'Precedence': 'bulk'
-          }
-        });
-        console.log(`✅ Email sent via Gmail SMTP to ${recipient} at ${new Date().toISOString()}`);
+      // SendGrid ONLY - no fallback to prevent spam blocking
+      if (!config.sendgrid.apiKey) {
+        throw new Error('SendGrid API key not configured - email sending disabled for safety');
       }
+
+      await sendGridService.sendEmail({
+        to: recipient,
+        subject: emailData.subject,
+        html: EmailTemplate.generateHTML(emailData, recipient),
+        from: `"${config.company.name}" <${config.company.senderEmail}>`,
+        replyTo: config.company.replyTo
+      });
+      console.log(`✅ Email sent via SendGrid to ${recipient} at ${new Date().toISOString()}`);
       
       // Update status to SENT
       this.emailStatuses.set(recipient, {
