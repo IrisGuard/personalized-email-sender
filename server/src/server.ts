@@ -18,6 +18,7 @@ app.use(cors({
     'http://localhost:5173', 
     'http://localhost:8080',
     'https://personalized-email-sender.onrender.com',
+    'https://offerakrogonosinternationalgroup.eu',
     /^https:\/\/.*\.lovableproject\.com$/,
     /^https:\/\/.*\.lovable\.app$/
   ],
