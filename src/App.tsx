@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/sonner";
+import { Toaster as RadixToaster } from "@/components/ui/toaster";
 import './App.css';
 import PasswordProtection from './components/PasswordProtection';
 import Index from './pages/Index';
@@ -15,6 +16,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Toaster />
+          <RadixToaster />
         </div>
       </Router>
     </PasswordProtection>
