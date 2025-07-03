@@ -82,13 +82,16 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
         setUploadedImageUrl(data.imageUrl);
         console.log('✅ Upload successful, image URL set:', data.imageUrl);
         
-        // Success toast with longer duration and better visibility
+        // SUCCESS NOTIFICATION - VISIBLE AND CLEAR
         toast({
-          title: '✅ Επιτυχής Ανέβασμα!',
-          description: `Η εικόνα "${data.originalName}" ανέβηκε με επιτυχία και είναι έτοιμη για αποστολή!`,
+          title: '🎉 ΕΠΙΤΥΧΙΑ! Εικόνα Ανέβηκε!',
+          description: `✅ "${data.originalName}" είναι έτοιμη για αποστολή στα emails!`,
           variant: 'default',
-          duration: 5000,
+          duration: 8000,
         });
+        
+        // Additional visual confirmation
+        console.log('🎉 UPLOAD SUCCESS - IMAGE READY FOR EMAIL SENDING:', data.imageUrl);
       } else {
         throw new Error(data.error || 'Upload failed');
       }
@@ -145,12 +148,18 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
           )}
           
           {uploadedImageUrl && (
-            <Alert className="bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800">
-              <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
-              <AlertDescription className="text-green-800 dark:text-green-200 font-medium">
-                ✅ Εικόνα ανέβηκε επιτυχώς και είναι έτοιμη για αποστολή!
+            <Alert className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-400 dark:from-green-900/30 dark:to-emerald-900/30 dark:border-green-500 shadow-lg">
+              <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
+              <AlertDescription className="text-green-800 dark:text-green-200 font-bold text-lg">
+                🎉 ΕΠΙΤΥΧΙΑ! Εικόνα Ανέβηκε Σωστά!
                 <br />
-                <span className="text-sm opacity-75">Μπορείτε τώρα να συνεχίσετε με την αποστολή email</span>
+                <span className="text-base font-semibold text-green-700 dark:text-green-300">
+                  ✅ Έτοιμη για αποστολή στα emails - Συνεχίστε με την αποστολή!
+                </span>
+                <br />
+                <span className="text-sm opacity-90 font-medium">
+                  📷 Αρχείο: {uploadedImageUrl.split('/').pop()}
+                </span>
               </AlertDescription>
             </Alert>
           )}

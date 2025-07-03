@@ -39,17 +39,43 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Static files for production build - serve React app
 app.use(express.static(path.join(__dirname, '../../dist'), {
-  fallthrough: false,
-  index: 'index.html'
+  fallthrough: true,
+  index: 'index.html',
+  setHeaders: (res, path) => {
+    // Prevent caching of HTML files to ensure password protection loads
+    if (path.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+    }
+  }
 }));
 
-// Serve React app για production - catch all route
+// Improved catch-all route with better error handling
 app.get('*', (req, res) => {
-  if (!req.path.startsWith('/api') && !req.path.startsWith('/health') && !req.path.startsWith('/send-offer-emails') && !req.path.startsWith('/upload')) {
-    res.sendFile(path.join(__dirname, '../../dist/index.html'));
-  } else {
-    res.status(404).json({ error: 'API endpoint not found' });
+  // Skip API routes and bot scans
+  if (req.path.startsWith('/api') || 
+      req.path.startsWith('/health') || 
+      req.path.startsWith('/send-offer-emails') || 
+      req.path.startsWith('/upload') ||
+      req.path.includes('wp-') ||
+      req.path.includes('.php') ||
+      req.path.includes('.sql') ||
+      req.path.includes('config.') ||
+      req.path.includes('backup') ||
+      req.path.includes('.ssh') ||
+      req.path.includes('.git') ||
+      req.path.includes('.env') ||
+      req.path.includes('server-') ||
+      req.path.includes('database') ||
+      req.path.includes('dump.') ||
+      req.path.includes('_vti_') ||
+      req.path.includes('docker-')) {
+    return res.status(404).json({ error: 'Not found' });
   }
+  
+  // Serve the React app for valid routes
+  res.sendFile(path.join(__dirname, '../../dist/index.html'));
 });
 
 // Start server

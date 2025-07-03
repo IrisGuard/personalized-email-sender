@@ -23,11 +23,17 @@ export class EmailTemplate {
             ${emailData.description.replace(/\n/g, '<br>')}
           </div>
           
-          ${emailData.price ? `
-            <div style="background-color: #e8f5e8; border: 1px solid #c3e6c3; border-radius: 8px; padding: 15px; margin: 20px 0; text-align: center;">
-              <strong style="color: #2c5530; font-size: 18px;">Τιμή (χωρίς Φ.Π.Α.): ${emailData.price}</strong>
+          ${emailData.price && emailData.price.trim() !== '' ? `
+            <div style="background-color: #e8f5e8; border: 2px solid #4a7c59; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+              <div style="font-size: 14px; color: #2c5530; margin-bottom: 8px; font-weight: 500;">💰 ΤΙΜΗ ΠΡΟΣΦΟΡΑΣ</div>
+              <div style="color: #2c5530; font-size: 24px; font-weight: bold; margin: 5px 0;">€${emailData.price}</div>
+              <div style="color: #2c5530; font-size: 16px; font-weight: 600;">(χωρίς Φ.Π.Α.)</div>
             </div>
-          ` : ''}
+          ` : `
+            <div style="background-color: #f0f4ff; border: 2px solid #3498db; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center;">
+              <div style="color: #2c3e50; font-size: 18px; font-weight: 600;">📞 Επικοινωνήστε για προσφορά</div>
+            </div>
+          `}
           
           ${emailData.cta ? `
             <div style="text-align: center; margin: 30px 0;">

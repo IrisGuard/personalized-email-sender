@@ -50,14 +50,19 @@ const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children }) => 
     console.log('🔒 Login attempt with password');
     
     if (password === CORRECT_PASSWORD) {
-      console.log('🔒 Password correct, setting authentication');
+      console.log('🔒 ✅ CORRECT PASSWORD - GRANTING ACCESS');
       setIsAuthenticated(true);
       localStorage.setItem('aig_auth', 'authenticated');
       localStorage.setItem('aig_auth_time', Date.now().toString());
       setError('');
+      
+      // Force a page refresh to ensure clean state
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } else {
-      console.log('🔒 Invalid password attempt');
-      setError('Λάθος κωδικός πρόσβασης');
+      console.log('🔒 ❌ INVALID PASSWORD ATTEMPT');
+      setError('Λάθος κωδικός πρόσβασης - Μόνο εξουσιοδοτημένο προσωπικό');
       setPassword('');
     }
   };
