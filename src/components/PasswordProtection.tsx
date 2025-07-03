@@ -20,22 +20,43 @@ const PasswordProtection: React.FC<PasswordProtectionProps> = ({ children }) => 
   const CORRECT_PASSWORD = 'AIG2024';
 
   useEffect(() => {
+    console.log('🔒 PasswordProtection: Checking authentication...');
+    
     // Check if already authenticated
     const auth = localStorage.getItem('aig_auth');
-    if (auth === 'authenticated') {
-      setIsAuthenticated(true);
+    const authTime = localStorage.getItem('aig_auth_time');
+    
+    if (auth === 'authenticated' && authTime) {
+      // Check if session is still valid (24 hours)
+      const sessionAge = Date.now() - parseInt(authTime);
+      const maxAge = 24 * 60 * 60 * 1000; // 24 hours
+      
+      if (sessionAge < maxAge) {
+        console.log('🔒 Valid session found, authenticating user');
+        setIsAuthenticated(true);
+      } else {
+        console.log('🔒 Session expired, clearing auth');
+        localStorage.removeItem('aig_auth');
+        localStorage.removeItem('aig_auth_time');
+      }
     }
+    
     setLoading(false);
+    console.log('🔒 Authentication check complete');
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('🔒 Login attempt with password');
     
     if (password === CORRECT_PASSWORD) {
+      console.log('🔒 Password correct, setting authentication');
       setIsAuthenticated(true);
       localStorage.setItem('aig_auth', 'authenticated');
+      localStorage.setItem('aig_auth_time', Date.now().toString());
       setError('');
     } else {
+      console.log('🔒 Invalid password attempt');
       setError('Λάθος κωδικός πρόσβασης');
       setPassword('');
     }

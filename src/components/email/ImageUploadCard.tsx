@@ -81,9 +81,13 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
       if (data.success) {
         setUploadedImageUrl(data.imageUrl);
         console.log('✅ Upload successful, image URL set:', data.imageUrl);
+        
+        // Success toast with longer duration and better visibility
         toast({
-          title: 'Επιτυχής ανέβασμα! ✅',
-          description: `Η εικόνα "${data.originalName}" ανέβηκε με επιτυχία`,
+          title: '✅ Επιτυχής Ανέβασμα!',
+          description: `Η εικόνα "${data.originalName}" ανέβηκε με επιτυχία και είναι έτοιμη για αποστολή!`,
+          variant: 'default',
+          duration: 5000,
         });
       } else {
         throw new Error(data.error || 'Upload failed');
@@ -141,10 +145,12 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
           )}
           
           {uploadedImageUrl && (
-            <Alert className="bg-green-50 border-green-200">
-              <CheckCircle className="h-4 w-4 text-green-600" />
-              <AlertDescription className="text-green-800">
+            <Alert className="bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800">
+              <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+              <AlertDescription className="text-green-800 dark:text-green-200 font-medium">
                 ✅ Εικόνα ανέβηκε επιτυχώς και είναι έτοιμη για αποστολή!
+                <br />
+                <span className="text-sm opacity-75">Μπορείτε τώρα να συνεχίσετε με την αποστολή email</span>
               </AlertDescription>
             </Alert>
           )}
