@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import path from 'path';
 import sharp from 'sharp';
 import fs from 'fs';
-import { EmailQueue, EmailData } from '../services/emailQueue';
+import { EmailQueue } from '../services/emailQueue';
+import { EmailData } from '../types/email';
 
 const emailQueue = new EmailQueue();
 
