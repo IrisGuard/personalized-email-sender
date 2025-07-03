@@ -66,9 +66,15 @@ const ImageUploadCard: React.FC<ImageUploadCardProps> = ({
         headers: {
           'Accept': 'application/json',
         },
+        mode: 'cors',
       });
 
       console.log('📥 Upload response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
       const data = await response.json();
       console.log('📦 Upload response data:', data);
 

@@ -17,9 +17,13 @@ app.use(cors({
   origin: [
     'http://localhost:5173', 
     'http://localhost:8080',
-    'https://personalized-email-sender.onrender.com'
+    'https://personalized-email-sender.onrender.com',
+    /^https:\/\/.*\.lovableproject\.com$/,
+    /^https:\/\/.*\.lovable\.app$/
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
 }));
 
 app.use(express.json({ limit: '50mb' }));
