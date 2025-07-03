@@ -4,6 +4,7 @@ import sharp from 'sharp';
 import fs from 'fs';
 import { EmailQueue } from '../services/emailQueue';
 import { EmailData } from '../types/email';
+import { DomainWarmupService } from '../services/domainWarmup';
 
 const emailQueue = new EmailQueue();
 
@@ -62,6 +63,17 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
       return res.status(400).json({ 
         success: false, 
         error: 'Δεν βρέθηκαν έγκυρα email addresses' 
+      });
+    }
+
+    // Domain warm-up protection
+    if (!DomainWarmupService.isWithinWarmupLimits(validEmails.length)) {
+      const dailyLimit = DomainWarmupService.getDailyLimit();
+      return res.status(429).json({
+        success: false,
+        error: `Warm-up Protection: Μπορείτε να στείλετε μέχρι ${dailyLimit} emails/ημέρα για να προστατέψετε τη φήμη του domain σας.`,
+        dailyLimit,
+        warmupMessage: DomainWarmupService.getWarmupMessage(validEmails.length)
       });
     }
 

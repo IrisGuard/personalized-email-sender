@@ -7,9 +7,19 @@ export class EmailTemplate {
     const unsubscribeUrl = `mailto:unsubscribe+${unsubscribeToken}@${config.company.senderEmail.split('@')[1]}?subject=Unsubscribe`;
     
     return `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f9f9f9; padding: 20px;">
-        <div style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-          <h1 style="color: #2c3e50; text-align: center; border-bottom: 3px solid #3498db; padding-bottom: 10px;">
+      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
+        <!-- Preheader text for better preview -->
+        <div style="display: none; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; opacity: 0;">
+          ${emailData.title} - Ειδική προσφορά από ${config.company.name}
+        </div>
+        
+        <div style="background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+          <!-- Personal greeting to appear less bulk -->
+          <div style="color: #666; font-size: 14px; margin-bottom: 20px; text-align: center;">
+            Αγαπητέ/ή πελάτη, σας στέλνουμε αυτή την προσωπική προσφορά
+          </div>
+          
+          <h1 style="color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 15px; margin-bottom: 25px; font-size: 24px;">
             ${emailData.title}
           </h1>
           

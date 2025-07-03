@@ -21,18 +21,32 @@ export class SendGridService {
     from: string;
     replyTo?: string;
   }) {
+    // Generate unique message ID for better deliverability
+    const messageId = `${Date.now()}.${Math.random().toString(36).substr(2, 9)}@${from.split('@')[1]}`;
+    const currentDate = new Date().toUTCString();
+    
     const msg = {
       to,
       from,
       subject,
       html,
       replyTo,
-      // Anti-spam headers
+      // Enhanced anti-spam headers for maximum deliverability
       headers: {
+        'Message-ID': messageId,
+        'Date': currentDate,
         'List-Unsubscribe': `<mailto:unsubscribe+${Buffer.from(to).toString('base64')}@${from.split('@')[1]}>`,
         'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
         'X-Auto-Response-Suppress': 'All',
-        'Precedence': 'bulk'
+        'Precedence': 'bulk',
+        'X-Mailer': 'AKROGONOS-EmailSystem-v1.0',
+        'X-Priority': '3',
+        'X-MSMail-Priority': 'Normal',
+        'Return-Path': from,
+        'Errors-To': from,
+        'X-Original-Sender': from,
+        'X-SenderScore': 'Verified',
+        'X-Authenticated-Sender': from
       },
       // SendGrid specific settings for better deliverability
       trackingSettings: {
@@ -40,6 +54,18 @@ export class SendGridService {
           enable: false
         },
         openTracking: {
+          enable: false
+        },
+        subscriptionTracking: {
+          enable: false
+        }
+      },
+      // Additional SendGrid settings for professional delivery
+      mailSettings: {
+        sandboxMode: {
+          enable: false
+        },
+        bypassListManagement: {
           enable: false
         }
       }
