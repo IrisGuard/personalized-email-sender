@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -15,6 +15,7 @@ const EmailContentForm: React.FC<EmailContentFormProps> = ({
   formData,
   updateFormData,
 }) => {
+  const [selectedProfile, setSelectedProfile] = useState('');
   const subjectOptions = [
     'Ειδική Προσφορά',
     'Νέα Προσφορά',
@@ -137,7 +138,10 @@ const EmailContentForm: React.FC<EmailContentFormProps> = ({
         <div className="space-y-2">
           <Label htmlFor="profile">Περιγραφή Προφίλ Κουφώματος (Προαιρετικό)</Label>
           <div className="space-y-2">
-            <Select onValueChange={(value) => updateFormData('description', formData.description + '\n\n' + value)}>
+            <Select onValueChange={(value) => {
+              setSelectedProfile(value);
+              updateFormData('description', formData.description + '\n\n' + value);
+            }}>
               <SelectTrigger>
                 <SelectValue placeholder="Επιλέξτε προφίλ κουφώματος για προσθήκη" />
               </SelectTrigger>
@@ -149,6 +153,24 @@ const EmailContentForm: React.FC<EmailContentFormProps> = ({
                 ))}
               </SelectContent>
             </Select>
+            {selectedProfile && (
+              <div className="mt-4 p-4 border rounded-lg bg-muted/30">
+                <Label className="text-sm font-medium text-muted-foreground mb-2 block">
+                  Επιλεγμένη Περιγραφή Προφίλ:
+                </Label>
+                <Textarea
+                  value={selectedProfile}
+                  onChange={(e) => {
+                    setSelectedProfile(e.target.value);
+                    // Update the main description by replacing the old profile text with new one
+                    const descWithoutProfile = formData.description.replace(selectedProfile, '');
+                    updateFormData('description', descWithoutProfile + '\n\n' + e.target.value);
+                  }}
+                  rows={6}
+                  className="text-sm"
+                />
+              </div>
+            )}
           </div>
         </div>
 
