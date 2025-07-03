@@ -165,7 +165,7 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
             )}
 
             <div className="text-xs text-muted-foreground max-w-md mx-auto">
-              <p>⚡ Τα emails θα αποσταλούν με 30 δευτερόλεπτα καθυστέρηση ανά email για anti-spam προστασία</p>
+              <p>⚡ Τα emails θα αποσταλούν με 3 λεπτά καθυστέρηση ανά email για μέγιστη anti-spam προστασία</p>
               <p>🛡️ Χρησιμοποιεί SendGrid για 98%+ deliverability και zero spam</p>
             </div>
           </div>

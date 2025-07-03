@@ -64,9 +64,9 @@ export class EmailQueue {
         console.log(`🔄 Retrying email to ${retryItem.email} (attempt ${retryItem.attempts + 1}/3)`);
         await this.sendSingleEmail(retryItem.emailData, retryItem.email, retryItem.attempts + 1);
         
-        // Wait 1 minute between retries
+        // Wait 3 minutes between retries for consistency
         if (this.retryQueue.length > 0) {
-          await this.delay(60000);
+          await this.delay(180000);
         }
       }
     }
@@ -76,10 +76,10 @@ export class EmailQueue {
     for (const recipient of emailData.recipients) {
       await this.sendSingleEmail(emailData, recipient, 0);
       
-      // 30 seconds between individual emails in the same batch (SendGrid optimized)
+      // 3 minutes between individual emails for maximum safety
       if (emailData.recipients.indexOf(recipient) < emailData.recipients.length - 1) {
-        console.log(`⏳ Waiting 30 seconds before next email...`);
-        await this.delay(30000);
+        console.log(`⏳ Waiting 3 minutes before next email...`);
+        await this.delay(180000);
       }
     }
   }

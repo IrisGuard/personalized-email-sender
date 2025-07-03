@@ -94,7 +94,7 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
       message: 'Emails added to queue successfully',
       validEmails: validEmails.length,
       totalEmails: recipients.length,
-      estimatedTime: `${validEmails.length * 2} λεπτά`,
+      estimatedTime: `${validEmails.length * 3} λεπτά`,
       imageUploaded: true
     });
 
