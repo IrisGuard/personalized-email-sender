@@ -13,7 +13,7 @@ export const config = {
   company: {
     name: process.env.COMPANY_NAME || 'AKROGONOS INTERNATIONAL GROUP',
     replyTo: process.env.COMPANY_REPLY_TO || 'koufomataxondriki@gmail.com',
-    senderEmail: 'noreply@personalized-email-sender.onrender.com',
+    senderEmail: 'koufomataxondriki@gmail.com',
   }
 };
 
