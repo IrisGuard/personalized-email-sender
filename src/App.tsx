@@ -4,6 +4,7 @@ import { Toaster as RadixToaster } from "@/components/ui/toaster";
 import './App.css';
 import PasswordProtection from './components/PasswordProtection';
 import Index from './pages/Index';
+import ImageManager from './pages/ImageManager';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -14,10 +15,11 @@ function App() {
     <PasswordProtection>
       <Router>
         <div className="min-h-screen bg-background">
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/image-manager" element={<ImageManager />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
           <Toaster />
           <RadixToaster />
         </div>

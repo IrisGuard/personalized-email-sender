@@ -11,6 +11,7 @@ import { API_BASE_URL } from '@/utils/api';
 interface SendEmailSectionProps {
   formData: OfferFormData;
   uploadedImageUrl: string;
+  selectedStoredImages: string[];
   recipientCount: number;
   sending: boolean;
   setSending: (sending: boolean) => void;
@@ -21,6 +22,7 @@ interface SendEmailSectionProps {
 const SendEmailSection: React.FC<SendEmailSectionProps> = ({
   formData,
   uploadedImageUrl,
+  selectedStoredImages,
   recipientCount,
   sending,
   setSending,
@@ -51,11 +53,11 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
       return;
     }
     
-    // Validation
-    if (!uploadedImageUrl) {
+    // Validation - either uploaded image or stored images
+    if (!uploadedImageUrl && selectedStoredImages.length === 0) {
       toast({
-        title: 'Λείπει εικόνα',
-        description: 'Παρακαλώ ανεβάστε πρώτα την εικόνα προσφοράς',
+        title: 'Λείπουν εικόνες',
+        description: 'Παρακαλώ επιλέξτε τουλάχιστον μία εικόνα ή ανεβάστε νέα',
         variant: 'destructive',
       });
       return;
@@ -98,6 +100,7 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
           ...formData,
           recipients,
           imageUrl: uploadedImageUrl,
+          storedImages: selectedStoredImages,
         }),
       });
 
@@ -141,7 +144,7 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
           <div className="text-center space-y-4">
             <Button
               onClick={sendEmails}
-              disabled={sending || !uploadedImageUrl || recipientCount === 0}
+              disabled={sending || (!uploadedImageUrl && selectedStoredImages.length === 0) || recipientCount === 0}
               className="w-full max-w-md mx-auto flex items-center gap-2 text-lg py-6"
               size="lg"
             >

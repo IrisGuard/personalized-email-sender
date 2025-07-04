@@ -7,6 +7,7 @@ export interface EmailData {
   price?: string;
   cta?: string;
   imageUrl?: string;
+  storedImages?: string[];
 }
 
 // Email status tracking

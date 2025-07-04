@@ -2,7 +2,7 @@ import { config } from '../config/environment';
 import { EmailData } from '../types/email';
 
 export class EmailTemplate {
-  static generateHTML(emailData: EmailData, recipient: string): string {
+  static generateHTML(emailData: EmailData, recipient: string, imageUrls: string[] = []): string {
     const unsubscribeToken = Buffer.from(recipient).toString('base64');
     const unsubscribeUrl = `https://offerakrogonosinternationalgroup.eu/unsubscribe?token=${unsubscribeToken}`;
     
@@ -47,19 +47,7 @@ export class EmailTemplate {
               </h1>
               
               <!-- Image section with professional display -->
-              ${emailData.imageUrl ? `
-              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 20px 0;">
-                <tr>
-                  <td align="center">
-                    <img src="${emailData.imageUrl}" 
-                         alt="Προϊόν ${config.company.name}" 
-                         width="500" 
-                         height="auto"
-                         style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; border: none; outline: none;" />
-                  </td>
-                </tr>
-              </table>
-              ` : ''}
+              ${this.generateImageSection(emailData.imageUrl, imageUrls)}
               
               <!-- Description -->
               <div style="font-size: 16px; line-height: 1.6; color: #333; margin: 20px 0; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
@@ -123,6 +111,69 @@ export class EmailTemplate {
   </table>
 </body>
 </html>
+    `;
+  }
+
+  private static generateImageSection(singleImageUrl?: string, multipleImages: string[] = []): string {
+    const allImages = [];
+    
+    // Add single uploaded image if exists
+    if (singleImageUrl) {
+      allImages.push(singleImageUrl);
+    }
+    
+    // Add multiple stored images
+    if (multipleImages && multipleImages.length > 0) {
+      allImages.push(...multipleImages);
+    }
+    
+    if (allImages.length === 0) {
+      return '';
+    }
+    
+    // Single image layout
+    if (allImages.length === 1) {
+      return `
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 20px 0;">
+          <tr>
+            <td align="center">
+              <img src="${allImages[0]}" 
+                   alt="Προϊόν ${config.company.name}" 
+                   width="500" 
+                   height="auto"
+                   style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; border: none; outline: none;" />
+            </td>
+          </tr>
+        </table>
+      `;
+    }
+    
+    // Multiple images layout (2 columns for 2 images, 3 columns for 3+ images)
+    const columns = allImages.length === 2 ? 2 : 3;
+    const imageWidth = columns === 2 ? 280 : 180;
+    
+    let imagesHtml = '';
+    for (let i = 0; i < allImages.length; i += columns) {
+      const rowImages = allImages.slice(i, i + columns);
+      imagesHtml += `
+        <tr>
+          ${rowImages.map(imgUrl => `
+            <td align="center" style="padding: 10px;">
+              <img src="${imgUrl}" 
+                   alt="Προϊόν ${config.company.name}" 
+                   width="${imageWidth}" 
+                   height="auto"
+                   style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; border: none; outline: none;" />
+            </td>
+          `).join('')}
+        </tr>
+      `;
+    }
+    
+    return `
+      <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 20px 0;">
+        ${imagesHtml}
+      </table>
     `;
   }
 

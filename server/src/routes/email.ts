@@ -37,7 +37,7 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
       }
     }
 
-    let { recipients, description, price, cta, imageUrl } = req.body;
+    let { recipients, description, price, cta, imageUrl, storedImages } = req.body;
     
     console.log('📥 Received request body:', req.body);
     console.log('🖼️ Image URL from request:', imageUrl);
@@ -67,11 +67,11 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
     }
 
 
-    // Use imageUrl from request (image already uploaded via /upload endpoint)
-    if (!imageUrl) {
+    // Validate that at least one image source is provided
+    if (!imageUrl && (!storedImages || storedImages.length === 0)) {
       return res.status(400).json({ 
         success: false, 
-        error: 'Image URL is required' 
+        error: 'At least one image (uploaded or stored) is required' 
       });
     }
 
@@ -83,7 +83,8 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
       description,
       price,
       cta,
-      imageUrl
+      imageUrl,
+      storedImages: storedImages || []
     };
 
     // Add to queue for processing

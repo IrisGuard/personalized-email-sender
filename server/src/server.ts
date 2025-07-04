@@ -6,6 +6,7 @@ import { upload } from './middleware/upload';
 import { healthCheck } from './routes/health';
 import { uploadImage } from './routes/upload';
 import { sendOfferEmails } from './routes/email';
+import { getStoredImages, uploadStoredImage, deleteStoredImage } from './routes/storedImages';
 
 const app = express();
 
@@ -38,6 +39,11 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.get('/health', healthCheck);
 app.post('/send-offer-emails', sendOfferEmails);
 app.post('/upload', upload.single('image'), uploadImage);
+
+// Stored images routes
+app.get('/stored-images', getStoredImages);
+app.post('/upload-stored-image', upload.single('image'), uploadStoredImage);
+app.delete('/stored-images/:imageId', deleteStoredImage);
 
 // Serve static uploaded images
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
