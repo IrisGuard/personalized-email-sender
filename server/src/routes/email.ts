@@ -37,7 +37,7 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
       }
     }
 
-    let { recipients, subject, title, description, price, cta, imageUrl } = req.body;
+    let { recipients, description, price, cta, imageUrl } = req.body;
     
     console.log('📥 Received request body:', req.body);
     console.log('🖼️ Image URL from request:', imageUrl);
@@ -79,7 +79,7 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
     const emailData: EmailData = {
       recipients: validEmails,
       subject: 'Ενημέρωση Προϊόντων - AKROGONOS INTERNATIONAL GROUP',
-      title: title || 'Ενημέρωση προϊόντων',
+      title: 'Ενημέρωση προϊόντων',
       description,
       price,
       cta,
