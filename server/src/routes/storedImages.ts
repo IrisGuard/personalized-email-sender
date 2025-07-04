@@ -3,6 +3,7 @@ import path from 'path';
 import sharp from 'sharp';
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
+import FormData from 'form-data';
 
 interface StoredImage {
   id: string;
@@ -63,7 +64,7 @@ export const uploadStoredImage = async (req: Request, res: Response) => {
     const optimizedImagePath = path.join(path.dirname(req.file.path), professionalFilename);
 
     // Optimize image for email delivery
-    await sharp(req.file.path)
+    const optimizedBuffer = await sharp(req.file.path)
       .resize(800, 600, { 
         fit: 'inside', 
         withoutEnlargement: true,
@@ -74,12 +75,32 @@ export const uploadStoredImage = async (req: Request, res: Response) => {
         progressive: true,
         mozjpeg: true
       })
-      .toFile(optimizedImagePath);
+      .toBuffer();
 
-    // Generate URL
-    const host = req.get('host') || 'personalized-email-sender.onrender.com';
-    const protocol = req.get('x-forwarded-proto') || (host.includes('localhost') ? 'http' : 'https');
-    const imageUrl = `${protocol}://${host}/uploads/${professionalFilename}`;
+    // Upload to ImgBB CDN for professional delivery
+    const imgbbApiKey = '7c9b3dc0ad75d9b5f8e4f2a1d3e6c8b9'; // Public API key για testing
+    const formData = new FormData();
+    formData.append('image', optimizedBuffer.toString('base64'));
+    formData.append('name', professionalFilename);
+    
+    const cdnResponse = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbApiKey}`, {
+      method: 'POST',
+      body: formData,
+    });
+    
+    const cdnData = await cdnResponse.json();
+    
+    if (!cdnData.success) {
+      // Fallback to local hosting if CDN fails
+      await sharp(optimizedBuffer).toFile(optimizedImagePath);
+      const host = req.get('host') || 'personalized-email-sender.onrender.com';
+      const protocol = req.get('x-forwarded-proto') || (host.includes('localhost') ? 'http' : 'https');
+      var imageUrl = `${protocol}://${host}/uploads/${professionalFilename}`;
+      console.log('⚠️ CDN failed for stored image, using local hosting:', imageUrl);
+    } else {
+      var imageUrl = cdnData.data.url;
+      console.log('🚀 Stored image CDN Upload successful:', imageUrl);
+    }
 
     // Create stored image record
     const storedImage: StoredImage = {
