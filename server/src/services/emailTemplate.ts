@@ -4,7 +4,7 @@ import { EmailData } from '../types/email';
 export class EmailTemplate {
   static generateHTML(emailData: EmailData, recipient: string): string {
     const unsubscribeToken = Buffer.from(recipient).toString('base64');
-    const unsubscribeUrl = `mailto:unsubscribe+${unsubscribeToken}@energiakakoufomata-koufomatapvc.gr?subject=Unsubscribe`;
+    const unsubscribeUrl = `mailto:unsubscribe+${unsubscribeToken}@offerakrogonosinternationalgroup.eu?subject=Unsubscribe`;
     
     return `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
@@ -23,11 +23,11 @@ export class EmailTemplate {
             ${emailData.title}
           </h1>
           
-          ${emailData.imageUrl ? `
-            <div style="text-align: center; margin: 20px 0;">
-              <img src="${emailData.imageUrl}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; margin: 0 auto;" />
-            </div>
-          ` : ''}
+           ${emailData.imageUrl ? `
+             <div style="text-align: center; margin: 20px 0;">
+               <img src="${emailData.imageUrl}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; margin: 0 auto; border: none;" />
+             </div>
+           ` : ''}
           
           <div style="font-size: 16px; line-height: 1.6; color: #333; margin: 20px 0; text-align: center;">
             ${emailData.description.replace(/\n/g, '<br>')}
@@ -70,36 +70,36 @@ export class EmailTemplate {
   private static getCompanySignature(): string {
     return `
       <!-- ΕΠΑΓΓΕΛΜΑΤΙΚΗ ΥΠΟΓΡΑΦΗ -->
-      <div style="margin-top: 20px; font-size: 14px; line-height: 1.6; text-align: left; background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
+      <div style="margin-top: 20px; font-size: 14px; line-height: 1.6; text-align: center; background-color: #f8f9fa; padding: 20px; border-radius: 8px;">
         <strong>ΟΜΙΛΟΣ ΕΤΑΙΡΕΙΩΝ</strong><br />
         <strong>AKROGONOS INTERNATIONAL GROUP</strong><br />
         ΑΘΗΝΑ - ΠΕΙΡΑΙΑ - ΚΡΗΤΗ - ΒΟΥΛΓΑΡΙΑ – ΠΩΛΗΣΗ ΠΑΝΕΛΑΔΙΚΑ - ΑΝΤΙΠΡΟΣΩΠΕΙΕΣ / ΕΙΣΑΓΩΓΕΣ – ΕΞΑΓΩΓΕΣ<br /><br />
         
-        <div style="margin: 15px 0; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #6c757d; border-radius: 4px;">
+        <div style="margin: 15px 0; padding: 15px; background-color: #ffffff; border-left: 4px solid #6c757d; border-radius: 4px;">
           <strong style="color: #495057;">Επικοινωνήστε μαζί μας για περισσότερες πληροφορίες</strong><br />
           <span style="color: #6c757d;">Με ένα ολοκληρωμένο δίκτυο διανομής είμαστε σε θέση να προμηθεύουμε Πανελλαδικά τα προϊόντα μας με συνέπεια, ευθύνη και αξιοπιστία.</span>
         </div><br />
         
         <strong>Γραφείο Εξαγωγών – Πειραιά Νόταρα 117</strong><br />
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">imports[at]energiakakoufomata-koufomatapvc.gr</span><br />
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">export[at]energiakakoufomata-koufomatapvc.gr</span><br /><br />
+        📧 imports@energiakakoufomata-koufomatapvc.gr<br />
+        📧 export@energiakakoufomata-koufomatapvc.gr<br /><br />
         
         <strong>Γραφείο Ηράκλειο Κρήτης Σεφέρη 5</strong><br />
         Τηλ: 2811117934 – 6939366243<br />
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">paragelies[at]energiakakoufomata-koufomatapvc.gr</span><br /><br />
+        📧 paragelies@energiakakoufomata-koufomatapvc.gr<br /><br />
         
         <strong>Γραφεία Ηράκλειο Κρήτης Γερωνυμάκη 104 – ΠΑΤΕΛΕΣ</strong><br />
         Τηλ: 2811812735 – 6907793443<br />
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">sale[at]energiakakoufomata-koufomatapvc.gr</span><br />
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">koufomata.pvc[at]gmail.com</span><br /><br />
+        📧 sale@energiakakoufomata-koufomatapvc.gr<br />
+        📧 koufomata.pvc@gmail.com<br /><br />
         
         <strong>Γραφεία Ηράκλειο Κρήτης Ολούντος 34</strong><br />
         Τηλ: 2811812736<br />
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">prosfores[at]energiakakoufomata-koufomatapvc.gr</span><br /><br />
+        📧 prosfores@energiakakoufomata-koufomatapvc.gr<br /><br />
         
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">pvc.laminate[at]gmail.com</span><br />
-        🌐 Website: <a href="https://www.energiakakoufomata-koufomatapvc.gr/" target="_blank" style="color: #3498db; text-decoration: none;">energiakakoufomata-koufomatapvc.gr</a><br />
-        🔗 Επικοινωνία: <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" target="_blank" style="color: #3498db; text-decoration: none;">energiakakoufomata-koufomatapvc.gr/epikoinonia</a>
+        📧 pvc.laminate@gmail.com<br />
+        🌐 Website: energiakakoufomata-koufomatapvc.gr<br />
+        🔗 Επικοινωνία: energiakakoufomata-koufomatapvc.gr/epikoinonia
       </div>
     `;
   }
