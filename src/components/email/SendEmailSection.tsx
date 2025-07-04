@@ -54,11 +54,21 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
       return;
     }
     
-    // Validation - either uploaded image or stored images
-    if (!uploadedImageUrl && selectedStoredImageIds.length === 0) {
+    // CRITICAL VALIDATION - either uploaded image or stored images
+    const hasUploadedImage = uploadedImageUrl && uploadedImageUrl.trim() !== '';
+    const hasStoredImages = selectedStoredImageIds.length > 0;
+    
+    console.log('🔍 FRONTEND VALIDATION:', {
+      hasUploadedImage,
+      hasStoredImages,
+      uploadedImageUrl,
+      selectedStoredImageIds
+    });
+    
+    if (!hasUploadedImage && !hasStoredImages) {
       toast({
-        title: 'Λείπουν εικόνες',
-        description: 'Παρακαλώ επιλέξτε τουλάχιστον μία εικόνα ή ανεβάστε νέα',
+        title: '🚨 ΚΡΙΣΙΜΟ: Λείπουν εικόνες',
+        description: 'ΥΠΟΧΡΕΩΤΙΚΟ: Επιλέξτε τουλάχιστον μία αποθηκευμένη εικόνα ή ανεβάστε νέα εικόνα πριν την αποστολή',
         variant: 'destructive',
       });
       return;

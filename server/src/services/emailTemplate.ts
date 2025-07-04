@@ -144,18 +144,34 @@ export class EmailTemplate {
   private static generateImageSection(singleImageUrl?: string, multipleImages: string[] = []): string {
     const allImages = [];
     
-    // Add single uploaded image if exists
-    if (singleImageUrl) {
+    // CRITICAL SAFETY: Validate and add single uploaded image if exists
+    if (singleImageUrl && singleImageUrl.trim() !== '' && singleImageUrl.startsWith('http')) {
       allImages.push(singleImageUrl);
+      console.log(`✅ EMAIL TEMPLATE: Added uploaded image: ${singleImageUrl}`);
     }
     
-    // Add multiple stored images
-    if (multipleImages && multipleImages.length > 0) {
-      allImages.push(...multipleImages);
+    // CRITICAL SAFETY: Validate and add multiple stored images
+    if (multipleImages && Array.isArray(multipleImages) && multipleImages.length > 0) {
+      const validStoredImages = multipleImages.filter(url => url && url.trim() !== '' && url.startsWith('http'));
+      allImages.push(...validStoredImages);
+      console.log(`✅ EMAIL TEMPLATE: Added ${validStoredImages.length} stored images from ${multipleImages.length} provided`);
     }
+    
+    console.log(`🔍 EMAIL TEMPLATE CRITICAL CHECK: Total valid images for email: ${allImages.length}`);
     
     if (allImages.length === 0) {
-      return '';
+      console.error('❌ EMAIL TEMPLATE CRITICAL: No valid images to render in email');
+      return `
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 20px 0;">
+          <tr>
+            <td align="center" style="padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+              <div style="color: #666; font-size: 16px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                📧 Επικοινωνήστε μαζί μας για περισσότερες πληροφορίες
+              </div>
+            </td>
+          </tr>
+        </table>
+      `;
     }
     
     // Single image layout

@@ -87,9 +87,11 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
       </CardHeader>
       <CardContent className="space-y-4">
         {storedImages.length === 0 ? (
-          <Alert>
-            <AlertDescription>
-              No stored images available. Please upload some images first using the Image Manager.
+          <Alert className="bg-red-50 border-red-200">
+            <AlertDescription className="text-red-800">
+              <strong>🚨 ΚΡΙΣΙΜΟ:</strong> Δεν υπάρχουν αποθηκευμένες εικόνες. 
+              Ανεβάστε εικόνες στον <a href="/image-manager" target="_blank" className="underline font-semibold">Image Manager</a> 
+              ή χρησιμοποιήστε το tab "Upload New" για να ανεβάσετε νέα εικόνα.
             </AlertDescription>
           </Alert>
         ) : (
