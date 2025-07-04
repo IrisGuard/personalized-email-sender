@@ -7,8 +7,6 @@ import { OfferFormData, EmailStats } from '@/types/email';
 
 const UnifiedEmailSender = () => {
   const [formData, setFormData] = useState<OfferFormData>({
-    subject: '',
-    title: '',
     description: '',
     price: '',
     cta: 'Περισσότερες Πληροφορίες',

@@ -61,14 +61,6 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
       return;
     }
 
-    if (!formData.subject.trim() || !formData.title.trim()) {
-      toast({
-        title: 'Ελλιπή στοιχεία',
-        description: 'Παρακαλώ συμπληρώστε θέμα και τίτλο',
-        variant: 'destructive',
-      });
-      return;
-    }
 
     // Recipients are already an array from the frontend
     const recipients = Array.isArray(formData.recipients) 

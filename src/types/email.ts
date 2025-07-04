@@ -1,8 +1,6 @@
 // Email related types and interfaces
 
 export interface OfferFormData {
-  subject: string;
-  title: string;
   description: string;
   price: string;
   cta: string;
