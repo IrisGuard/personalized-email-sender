@@ -5,6 +5,30 @@ import fs from 'fs';
 import { EmailQueue } from '../services/emailQueue';
 import { EmailData } from '../types/email';
 
+interface StoredImage {
+  id: string;
+  filename: string;
+  url: string;
+  title: string;
+  category: string;
+  uploadDate: string;
+  size: number;
+}
+
+// Load stored images from file
+const loadStoredImages = (): StoredImage[] => {
+  try {
+    const STORAGE_FILE = path.join(__dirname, '../../data/stored-images.json');
+    if (fs.existsSync(STORAGE_FILE)) {
+      const data = fs.readFileSync(STORAGE_FILE, 'utf8');
+      return JSON.parse(data);
+    }
+  } catch (error) {
+    console.error('❌ Error loading stored images in email route:', error);
+  }
+  return [];
+};
+
 
 const emailQueue = new EmailQueue();
 
@@ -75,6 +99,26 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
       });
     }
 
+    // Load stored images data and convert IDs to image objects
+    const allStoredImages = loadStoredImages();
+    console.log(`📚 Loaded ${allStoredImages.length} stored images from file`);
+    
+    // Convert stored image IDs to actual image data with URLs
+    const selectedStoredImages: StoredImage[] = [];
+    if (storedImages && Array.isArray(storedImages)) {
+      for (const imageId of storedImages) {
+        const foundImage = allStoredImages.find(img => img.id === imageId);
+        if (foundImage) {
+          selectedStoredImages.push(foundImage);
+          console.log(`✅ Found stored image: ${foundImage.title} -> ${foundImage.url}`);
+        } else {
+          console.warn(`⚠️ Stored image with ID ${imageId} not found in storage`);
+        }
+      }
+    }
+    
+    console.log(`🖼️ Selected stored images: ${selectedStoredImages.length}`);
+
     // Create email data with hardcoded professional subject
     const emailData: EmailData = {
       recipients: validEmails,
@@ -84,7 +128,8 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
       price,
       cta,
       imageUrl,
-      storedImages: storedImages || []
+      storedImages: storedImages || [],
+      storedImagesData: selectedStoredImages  // Pass actual image data
     };
 
     // Add to queue for processing

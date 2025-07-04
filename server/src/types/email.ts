@@ -8,6 +8,15 @@ export interface EmailData {
   cta?: string;
   imageUrl?: string;
   storedImages?: string[];
+  storedImagesData?: Array<{
+    id: string;
+    filename: string;
+    url: string;
+    title: string;
+    category: string;
+    uploadDate: string;
+    size: number;
+  }>;
 }
 
 // Email status tracking

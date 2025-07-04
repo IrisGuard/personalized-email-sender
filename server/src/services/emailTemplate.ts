@@ -1,9 +1,8 @@
 import { config } from '../config/environment';
 import { EmailData } from '../types/email';
-import path from 'path';
-import fs from 'fs';
 
-interface StoredImage {
+// Convert stored image data to URLs directly from passed data
+const convertStoredImageDataToUrls = (storedImagesData?: Array<{
   id: string;
   filename: string;
   url: string;
@@ -11,39 +10,17 @@ interface StoredImage {
   category: string;
   uploadDate: string;
   size: number;
-}
-
-// Load stored images from file
-const loadStoredImages = (): StoredImage[] => {
-  try {
-    const STORAGE_FILE = path.join(__dirname, '../../data/stored-images.json');
-    if (fs.existsSync(STORAGE_FILE)) {
-      const data = fs.readFileSync(STORAGE_FILE, 'utf8');
-      return JSON.parse(data);
-    }
-  } catch (error) {
-    console.error('❌ Error loading stored images for email template:', error);
-  }
-  return [];
-};
-
-// Convert stored image IDs to URLs
-const convertStoredImageIdsToUrls = (imageIds: string[]): string[] => {
-  if (!imageIds || imageIds.length === 0) return [];
+}>): string[] => {
+  if (!storedImagesData || storedImagesData.length === 0) return [];
   
-  const storedImages = loadStoredImages();
   const urls: string[] = [];
   
-  for (const imageId of imageIds) {
-    const foundImage = storedImages.find(img => img.id === imageId);
-    if (foundImage) {
-      urls.push(foundImage.url);
-      console.log(`✅ Converted stored image ID ${imageId} to URL: ${foundImage.url}`);
-    } else {
-      console.warn(`⚠️ Stored image with ID ${imageId} not found`);
-    }
+  for (const imageData of storedImagesData) {
+    urls.push(imageData.url);
+    console.log(`✅ Using stored image: ${imageData.title} -> ${imageData.url}`);
   }
   
+  console.log(`🔄 Converted ${storedImagesData.length} stored images to URLs`);
   return urls;
 };
 
@@ -52,9 +29,9 @@ export class EmailTemplate {
     const unsubscribeToken = Buffer.from(recipient).toString('base64');
     const unsubscribeUrl = `https://offerakrogonosinternationalgroup.eu/unsubscribe?token=${unsubscribeToken}`;
     
-    // Convert stored image IDs to URLs
-    const storedImageUrls = convertStoredImageIdsToUrls(emailData.storedImages || []);
-    console.log(`🔄 Converted ${emailData.storedImages?.length || 0} stored image IDs to ${storedImageUrls.length} URLs`);
+    // Convert stored image data to URLs
+    const storedImageUrls = convertStoredImageDataToUrls(emailData.storedImagesData);
+    console.log(`🔄 Converted ${emailData.storedImagesData?.length || 0} stored images to ${storedImageUrls.length} URLs`);
     
     return `
 <!DOCTYPE html>
