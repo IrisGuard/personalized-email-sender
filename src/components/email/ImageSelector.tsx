@@ -89,9 +89,12 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
         {storedImages.length === 0 ? (
           <Alert className="bg-red-50 border-red-200">
             <AlertDescription className="text-red-800">
-              <strong>🚨 ΚΡΙΣΙΜΟ:</strong> Δεν υπάρχουν αποθηκευμένες εικόνες. 
-              Ανεβάστε εικόνες στον <a href="/image-manager" target="_blank" className="underline font-semibold">Image Manager</a> 
+              <strong>🚨 ΚΡΙΣΙΜΟ ΣΦΑΛΜΑ:</strong> Δεν βρέθηκαν αποθηκευμένες εικόνες στη βάση δεδομένων. 
+              <br /><br />
+              <strong>ΛΥΣΗ:</strong> Ανεβάστε εικόνες στον <a href="/image-manager" target="_blank" className="underline font-semibold">Image Manager</a> 
               ή χρησιμοποιήστε το tab "Upload New" για να ανεβάσετε νέα εικόνα.
+              <br /><br />
+              <strong>⚠️ ΠΡΟΣΟΧΗ:</strong> Χωρίς εικόνες, δεν μπορείτε να στείλετε email campaigns.
             </AlertDescription>
           </Alert>
         ) : (

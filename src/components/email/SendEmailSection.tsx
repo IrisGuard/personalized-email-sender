@@ -67,9 +67,15 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
     
     if (!hasUploadedImage && !hasStoredImages) {
       toast({
-        title: '🚨 ΚΡΙΣΙΜΟ: Λείπουν εικόνες',
-        description: 'ΥΠΟΧΡΕΩΤΙΚΟ: Επιλέξτε τουλάχιστον μία αποθηκευμένη εικόνα ή ανεβάστε νέα εικόνα πριν την αποστολή',
+        title: '🚨 ΚΡΙΣΙΜΟ ΣΦΑΛΜΑ: Δεν βρέθηκαν εικόνες',
+        description: 'ΑΠΟΤΥΧΙΑ ΑΠΟΣΤΟΛΗΣ: Το σύστημα δεν βρήκε ούτε ανεβασμένη εικόνα ούτε επιλεγμένες αποθηκευμένες εικόνες. Παρακαλώ επιλέξτε εικόνες πριν την αποστολή.',
         variant: 'destructive',
+      });
+      console.error('🚨 CRITICAL: Email send blocked - no images found', {
+        hasUploadedImage,
+        hasStoredImages,
+        uploadedImageUrl,
+        selectedStoredImageIds
       });
       return;
     }

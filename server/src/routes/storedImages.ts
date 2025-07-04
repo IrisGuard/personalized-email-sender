@@ -35,15 +35,26 @@ const loadStoredImages = (): void => {
     ensureDataDirectory();
     if (fs.existsSync(STORAGE_FILE)) {
       const data = fs.readFileSync(STORAGE_FILE, 'utf8');
-      storedImages = JSON.parse(data);
+      const parsedData = JSON.parse(data);
+      storedImages = Array.isArray(parsedData) ? parsedData : [];
       console.log(`📚 Loaded ${storedImages.length} stored images from file`);
     } else {
-      console.log('📚 No stored images file found, starting fresh');
+      console.log('📚 No stored images file found, creating empty file');
       storedImages = [];
+      // Create empty file
+      fs.writeFileSync(STORAGE_FILE, JSON.stringify([], null, 2), 'utf8');
+      console.log('✅ Created empty stored-images.json file');
     }
   } catch (error) {
     console.error('❌ Error loading stored images:', error);
     storedImages = [];
+    // Try to create backup file
+    try {
+      fs.writeFileSync(STORAGE_FILE, JSON.stringify([], null, 2), 'utf8');
+      console.log('🔧 Created recovery stored-images.json file');
+    } catch (recoveryError) {
+      console.error('❌ Failed to create recovery file:', recoveryError);
+    }
   }
 };
 
