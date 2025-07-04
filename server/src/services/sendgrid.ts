@@ -35,8 +35,10 @@ export class SendGridService {
       headers: {
         'Message-ID': messageId,
         'Date': currentDate,
-        'List-Unsubscribe': `<mailto:unsubscribe+${Buffer.from(to).toString('base64')}@offerakrogonosinternationalgroup.eu>`,
+        'List-ID': `<prosfores.akrogonos.offerakrogonosinternationalgroup.eu>`,
+        'List-Unsubscribe': `<https://offerakrogonosinternationalgroup.eu/unsubscribe?token=${Buffer.from(to).toString('base64')}>`,
         'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+        'Precedence': 'bulk',
         'X-Mailer': 'AKROGONOS-EmailSystem-v1.0',
         'X-Priority': '3',
         'X-MSMail-Priority': 'Normal',
@@ -44,7 +46,9 @@ export class SendGridService {
         'Errors-To': from,
         'X-Original-Sender': from,
         'X-SenderScore': 'Verified',
-        'X-Authenticated-Sender': from
+        'X-Authenticated-Sender': from,
+        'Content-Type': 'text/html; charset=UTF-8',
+        'MIME-Version': '1.0'
       },
       // SendGrid specific settings for better deliverability
       trackingSettings: {

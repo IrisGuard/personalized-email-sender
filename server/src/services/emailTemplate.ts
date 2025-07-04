@@ -4,66 +4,125 @@ import { EmailData } from '../types/email';
 export class EmailTemplate {
   static generateHTML(emailData: EmailData, recipient: string): string {
     const unsubscribeToken = Buffer.from(recipient).toString('base64');
-    const unsubscribeUrl = `mailto:unsubscribe+${unsubscribeToken}@offerakrogonosinternationalgroup.eu?subject=Unsubscribe`;
+    const unsubscribeUrl = `https://offerakrogonosinternationalgroup.eu/unsubscribe?token=${unsubscribeToken}`;
     
     return `
-      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
-        <!-- Preheader text for better preview -->
-        <div style="display: none; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; opacity: 0;">
-          ${emailData.title} - Ενημέρωση προϊόντων από ${config.company.name}
-        </div>
-        
-        <div style="background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
-          <!-- Professional greeting -->
-          <div style="color: #666; font-size: 14px; margin-bottom: 20px; text-align: center;">
-            Αγαπητέ/ή πελάτη, σας ενημερώνουμε για τα διαθέσιμα προϊόντα μας
-          </div>
-          
-          <h1 style="color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 15px; margin-bottom: 25px; font-size: 24px;">
-            ${emailData.title}
-          </h1>
-          
-           ${emailData.imageUrl ? `
-             <div style="text-align: center; margin: 20px 0;">
-               <img src="${emailData.imageUrl}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; margin: 0 auto; border: none;" />
-             </div>
-           ` : ''}
-          
-          <div style="font-size: 16px; line-height: 1.6; color: #333; margin: 20px 0; text-align: center;">
-            ${emailData.description.replace(/\n/g, '<br>')}
-          </div>
-          
-          ${emailData.price && emailData.price.trim() !== '' ? `
-            <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 25px 0; text-align: center;">
-              <div style="font-size: 14px; color: #495057; margin-bottom: 8px; font-weight: 500;">ΤΙΜΗ ΠΡΟΪΟΝΤΟΣ</div>
-              <div style="color: #495057; font-size: 24px; font-weight: bold; margin: 5px 0;">€${emailData.price}</div>
-              <div style="color: #495057; font-size: 16px; font-weight: 600;">(χωρίς Φ.Π.Α.)</div>
-            </div>
-          ` : `
-            <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 25px 0; text-align: center;">
-              <div style="color: #495057; font-size: 18px; font-weight: 600;">Επικοινωνήστε για πληροφορίες</div>
-            </div>
-          `}
-          
-          ${emailData.cta ? `
-            <div style="text-align: center; margin: 30px 0;">
-              <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" 
-                 target="_blank"
-                 style="background-color: #3498db; color: white; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block;">
-                ${emailData.cta}
-              </a>
-            </div>
-          ` : ''}
-          
-          <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 14px; color: #666; text-align: center;">
-            <p><strong>${config.company.name}</strong></p>
-            <p>Για περισσότερες πληροφορίες επικοινωνήστε μαζί μας</p>
-            
-            ${this.getCompanySignature()}
-            ${this.getGDPRFooter(unsubscribeUrl)}
-          </div>
-        </div>
-      </div>
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${emailData.title}</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+</head>
+<body style="margin: 0; padding: 0; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+  <!-- Preheader text for better preview -->
+  <div style="display: none; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; opacity: 0;">
+    ${emailData.title} - Ενημέρωση προϊόντων από ${config.company.name}
+  </div>
+  
+  <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f8f9fa; padding: 20px 0;">
+    <tr>
+      <td align="center">
+        <table cellpadding="0" cellspacing="0" border="0" width="600" style="max-width: 600px; background-color: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+          <tr>
+            <td style="padding: 30px;">
+              
+              <!-- Professional greeting -->
+              <div style="color: #666; font-size: 14px; margin-bottom: 20px; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                Αγαπητέ/ή πελάτη, σας ενημερώνουμε για τα διαθέσιμα προϊόντα μας
+              </div>
+              
+              <!-- Title -->
+              <h1 style="color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 15px; margin: 0 0 25px 0; font-size: 24px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                ${emailData.title}
+              </h1>
+              
+              <!-- Image section with professional display -->
+              ${emailData.imageUrl ? `
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 20px 0;">
+                <tr>
+                  <td align="center">
+                    <img src="${emailData.imageUrl}" 
+                         alt="Προϊόν ${config.company.name}" 
+                         width="500" 
+                         height="auto"
+                         style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; border: none; outline: none;" />
+                  </td>
+                </tr>
+              </table>
+              ` : ''}
+              
+              <!-- Description -->
+              <div style="font-size: 16px; line-height: 1.6; color: #333; margin: 20px 0; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                ${emailData.description.replace(/\n/g, '<br>')}
+              </div>
+              
+              <!-- Price section -->
+              ${emailData.price && emailData.price.trim() !== '' ? `
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0;">
+                <tr>
+                  <td align="center">
+                    <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                      <div style="font-size: 14px; color: #495057; margin-bottom: 8px; font-weight: 500;">ΤΙΜΗ ΠΡΟΪΟΝΤΟΣ</div>
+                      <div style="color: #495057; font-size: 24px; font-weight: bold; margin: 5px 0;">€${emailData.price}</div>
+                      <div style="color: #495057; font-size: 16px; font-weight: 600;">(χωρίς Φ.Π.Α.)</div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              ` : `
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0;">
+                <tr>
+                  <td align="center">
+                    <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                      <div style="color: #495057; font-size: 18px; font-weight: 600;">Επικοινωνήστε για πληροφορίες</div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              `}
+              
+              <!-- CTA Button -->
+              ${emailData.cta ? `
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 30px 0;">
+                <tr>
+                  <td align="center">
+                    <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" 
+                       target="_blank"
+                       style="background-color: #3498db; color: white; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                      ${emailData.cta}
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              ` : ''}
+              
+              <!-- Company info and footer -->
+              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 14px; color: #666; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                <p style="margin: 10px 0;"><strong>${config.company.name}</strong></p>
+                <p style="margin: 10px 0;">Για περισσότερες πληροφορίες επικοινωνήστε μαζί μας</p>
+                
+                ${this.getCompanySignature()}
+                ${this.getGDPRFooter(unsubscribeUrl)}
+              </div>
+              
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
     `;
   }
 
@@ -107,15 +166,15 @@ export class EmailTemplate {
   private static getGDPRFooter(unsubscribeUrl: string): string {
     return `
       <!-- GDPR Compliance & Unsubscribe -->
-      <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 12px; color: #888;">
-        <p>Λαμβάνετε αυτό το email επειδή έχετε εκδηλώσει ενδιαφέρον για τις υπηρεσίες μας.</p>
-        <p>
+      <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 12px; color: #888; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <p style="margin: 10px 0;">Λαμβάνετε αυτό το email επειδή έχετε εκδηλώσει ενδιαφέρον για τις υπηρεσίες μας.</p>
+        <p style="margin: 10px 0;">
           <a href="${unsubscribeUrl}" style="color: #666; text-decoration: underline;">Απεγγραφή από τη λίστα</a> | 
           <a href="mailto:${config.company.replyTo}?subject=Privacy%20Policy" style="color: #666; text-decoration: underline;">Πολιτική Απορρήτου</a>
         </p>
         <p style="margin-top: 10px;">
           ${config.company.name}<br>
-          Email: <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">${config.company.replyTo.replace('@', '[at]')}</span>
+          Email: <span style="color: #666;">${config.company.replyTo}</span>
         </p>
       </div>
     `;
