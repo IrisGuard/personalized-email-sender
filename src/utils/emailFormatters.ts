@@ -12,7 +12,7 @@ export const createCompanySignature = (): string => {
   return `
     <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 14px; color: #666;">
       <strong>AKROGONOS INTERNATIONAL GROUP</strong><br>
-      📧 <a href="mailto:info@company.gr" style="color: #0066cc; text-decoration: none;">info@company.gr</a>
+      📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">info[at]company.gr</span>
     </div>
   `;
 };

@@ -13,7 +13,13 @@ const EmailHeader: React.FC<EmailHeaderProps> = ({ subject }) => {
         </div>
       </div>
       <div className="text-xs text-muted-foreground">
-        Από: AKROGONOS INTERNATIONAL GROUP &lt;koufomataxondriki@gmail.com&gt;
+        <span 
+          style={{ pointerEvents: 'none', color: 'inherit' }}
+          data-auto-link="false"
+          data-apple-data-detectors="false"
+        >
+          Από: AKROGONOS INTERNATIONAL GROUP &lt;noreply[at]offerakrogonosinternationalgroup.eu&gt;
+        </span>
       </div>
     </div>
   );

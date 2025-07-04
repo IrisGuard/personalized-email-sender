@@ -81,23 +81,23 @@ export class EmailTemplate {
         </div><br />
         
         <strong>Γραφείο Εξαγωγών – Πειραιά Νόταρα 117</strong><br />
-        📧 <span style="color: #3498db;">imports@offerakrogonosinternationalgroup.eu</span><br />
-        📧 <span style="color: #3498db;">export@offerakrogonosinternationalgroup.eu</span><br /><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">imports[at]offerakrogonosinternationalgroup.eu</span><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">export[at]offerakrogonosinternationalgroup.eu</span><br /><br />
         
         <strong>Γραφείο Ηράκλειο Κρήτης Σεφέρη 5</strong><br />
         Τηλ: 2811117934 – 6939366243<br />
-        📧 <span style="color: #3498db;">paragelies@offerakrogonosinternationalgroup.eu</span><br /><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">paragelies[at]offerakrogonosinternationalgroup.eu</span><br /><br />
         
         <strong>Γραφεία Ηράκλειο Κρήτης Γερωνυμάκη 104 – ΠΑΤΕΛΕΣ</strong><br />
         Τηλ: 2811812735 – 6907793443<br />
-        📧 <span style="color: #3498db;">sale@offerakrogonosinternationalgroup.eu</span><br />
-        📧 <span style="color: #3498db;">koufomata.pvc@gmail.com</span><br /><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">sale[at]offerakrogonosinternationalgroup.eu</span><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">koufomata.pvc[at]gmail.com</span><br /><br />
         
         <strong>Γραφεία Ηράκλειο Κρήτης Ολούντος 34</strong><br />
         Τηλ: 2811812736<br />
-        📧 <span style="color: #3498db;">prosfores@offerakrogonosinternationalgroup.eu</span><br /><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">prosfores[at]offerakrogonosinternationalgroup.eu</span><br /><br />
         
-        📧 <span style="color: #3498db;">pvc.laminate@gmail.com</span><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">pvc.laminate[at]gmail.com</span><br />
         🌐 Website: <a href="https://offerakrogonosinternationalgroup.eu/" target="_blank" style="color: #3498db; text-decoration: none;">offerakrogonosinternationalgroup.eu</a><br />
         🔗 Επικοινωνία: <a href="https://offerakrogonosinternationalgroup.eu/epikoinonia/" target="_blank" style="color: #3498db; text-decoration: none;">offerakrogonosinternationalgroup.eu/epikoinonia</a>
       </div>
@@ -115,8 +115,8 @@ export class EmailTemplate {
         </p>
         <p style="margin-top: 10px;">
           ${config.company.name}<br>
-          Email: <span style="color: #666;">${config.company.replyTo}</span><br>
-          Email: <span style="color: #666;">sale@offerakrogonosinternationalgroup.eu</span>
+          Email: <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">${config.company.replyTo.replace('@', '[at]')}</span><br>
+          Email: <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">sale[at]offerakrogonosinternationalgroup.eu</span>
         </p>
       </div>
     `;
