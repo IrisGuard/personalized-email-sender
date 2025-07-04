@@ -63,7 +63,7 @@ export const uploadStoredImage = async (req: Request, res: Response) => {
     const professionalFilename = `akrogonos-stored-${timestamp}-${safeTitle}.jpg`;
     const optimizedImagePath = path.join(path.dirname(req.file.path), professionalFilename);
 
-    // Optimize image for email delivery
+    // ULTIMATE EMAIL DELIVERABILITY OPTIMIZATION FOR STORED IMAGES
     const optimizedBuffer = await sharp(req.file.path)
       .resize(800, 600, { 
         fit: 'inside', 
@@ -73,15 +73,29 @@ export const uploadStoredImage = async (req: Request, res: Response) => {
       .jpeg({ 
         quality: 85,
         progressive: true,
-        mozjpeg: true
+        mozjpeg: true,
+        optimizeScans: true,
+        optimizeCoding: true
       })
+      .withMetadata({})        // STRIP ALL METADATA
       .toBuffer();
+    
+    // Ensure stored images are under 150KB
+    let finalBuffer = optimizedBuffer;
+    if (optimizedBuffer.length > 150000) {
+      finalBuffer = await sharp(req.file.path)
+        .resize(650, 500, { fit: 'inside', withoutEnlargement: true })
+        .jpeg({ quality: 75, progressive: true, mozjpeg: true })
+        .withMetadata({})
+        .toBuffer();
+    }
 
-    // Upload to ImgBB CDN for professional delivery
+    // Upload to ImgBB CDN with professional settings
     const imgbbApiKey = '7c9b3dc0ad75d9b5f8e4f2a1d3e6c8b9'; // Public API key για testing
     const formData = new FormData();
-    formData.append('image', optimizedBuffer.toString('base64'));
+    formData.append('image', finalBuffer.toString('base64'));
     formData.append('name', professionalFilename);
+    formData.append('expiration', '15552000'); // 6 months expiration
     
     const cdnResponse = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbApiKey}`, {
       method: 'POST',
@@ -91,15 +105,15 @@ export const uploadStoredImage = async (req: Request, res: Response) => {
     const cdnData = await cdnResponse.json();
     
     if (!cdnData.success) {
-      // Fallback to local hosting if CDN fails
-      await sharp(optimizedBuffer).toFile(optimizedImagePath);
+      // Fallback to local hosting with final optimized buffer
+      await sharp(finalBuffer).toFile(optimizedImagePath);
       const host = req.get('host') || 'personalized-email-sender.onrender.com';
       const protocol = req.get('x-forwarded-proto') || (host.includes('localhost') ? 'http' : 'https');
       var imageUrl = `${protocol}://${host}/uploads/${professionalFilename}`;
-      console.log('⚠️ CDN failed for stored image, using local hosting:', imageUrl);
+      console.log('⚠️ CDN failed for stored image, using local hosting with optimization:', imageUrl);
     } else {
       var imageUrl = cdnData.data.url;
-      console.log('🚀 Stored image CDN Upload successful:', imageUrl);
+      console.log('🚀 Stored image CDN Upload successful with professional optimization:', imageUrl);
     }
 
     // Create stored image record

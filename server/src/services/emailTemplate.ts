@@ -138,10 +138,12 @@ export class EmailTemplate {
           <tr>
             <td align="center">
               <img src="${allImages[0]}" 
-                   alt="Προϊόν ${config.company.name}" 
+                   alt="Επαγγελματική προσφορά προϊόντων από ${config.company.name} - Υψηλής ποιότητας εξοπλισμός" 
                    width="500" 
-                   height="auto"
-                   style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; border: none; outline: none;" />
+                   height="375"
+                   style="max-width: 100%; width: 500px; height: 375px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; border: none; outline: none; object-fit: cover;"
+                   loading="lazy"
+                   decoding="async" />
             </td>
           </tr>
         </table>
@@ -157,13 +159,15 @@ export class EmailTemplate {
       const rowImages = allImages.slice(i, i + columns);
       imagesHtml += `
         <tr>
-          ${rowImages.map(imgUrl => `
+          ${rowImages.map((imgUrl, index) => `
             <td align="center" style="padding: 10px;">
               <img src="${imgUrl}" 
-                   alt="Προϊόν ${config.company.name}" 
+                   alt="Επαγγελματική προσφορά προϊόντων ${index + 1} από ${config.company.name} - Υψηλής ποιότητας εξοπλισμός" 
                    width="${imageWidth}" 
-                   height="auto"
-                   style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; border: none; outline: none;" />
+                   height="${Math.round(imageWidth * 0.75)}"
+                   style="max-width: 100%; width: ${imageWidth}px; height: ${Math.round(imageWidth * 0.75)}px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; border: none; outline: none; object-fit: cover;"
+                   loading="lazy"
+                   decoding="async" />
             </td>
           `).join('')}
         </tr>
