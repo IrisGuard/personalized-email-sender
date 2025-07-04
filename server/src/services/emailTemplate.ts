@@ -4,7 +4,7 @@ import { EmailData } from '../types/email';
 export class EmailTemplate {
   static generateHTML(emailData: EmailData, recipient: string): string {
     const unsubscribeToken = Buffer.from(recipient).toString('base64');
-    const unsubscribeUrl = `mailto:unsubscribe+${unsubscribeToken}@offerakrogonosinternationalgroup.eu?subject=Unsubscribe`;
+    const unsubscribeUrl = `mailto:unsubscribe+${unsubscribeToken}@energiakakoufomata-koufomatapvc.gr?subject=Unsubscribe`;
     
     return `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
@@ -25,11 +25,11 @@ export class EmailTemplate {
           
           ${emailData.imageUrl ? `
             <div style="text-align: center; margin: 20px 0;">
-              <img src="${emailData.imageUrl}" alt="Product Image" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+              <img src="${emailData.imageUrl}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; margin: 0 auto;" />
             </div>
           ` : ''}
           
-          <div style="font-size: 16px; line-height: 1.6; color: #333; margin: 20px 0;">
+          <div style="font-size: 16px; line-height: 1.6; color: #333; margin: 20px 0; text-align: center;">
             ${emailData.description.replace(/\n/g, '<br>')}
           </div>
           
@@ -47,7 +47,7 @@ export class EmailTemplate {
           
           ${emailData.cta ? `
             <div style="text-align: center; margin: 30px 0;">
-              <a href="https://offerakrogonosinternationalgroup.eu/epikoinonia/" 
+              <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" 
                  target="_blank"
                  style="background-color: #3498db; color: white; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block;">
                 ${emailData.cta}
@@ -81,25 +81,25 @@ export class EmailTemplate {
         </div><br />
         
         <strong>Γραφείο Εξαγωγών – Πειραιά Νόταρα 117</strong><br />
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">imports[at]offerakrogonosinternationalgroup.eu</span><br />
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">export[at]offerakrogonosinternationalgroup.eu</span><br /><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">imports[at]energiakakoufomata-koufomatapvc.gr</span><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">export[at]energiakakoufomata-koufomatapvc.gr</span><br /><br />
         
         <strong>Γραφείο Ηράκλειο Κρήτης Σεφέρη 5</strong><br />
         Τηλ: 2811117934 – 6939366243<br />
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">paragelies[at]offerakrogonosinternationalgroup.eu</span><br /><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">paragelies[at]energiakakoufomata-koufomatapvc.gr</span><br /><br />
         
         <strong>Γραφεία Ηράκλειο Κρήτης Γερωνυμάκη 104 – ΠΑΤΕΛΕΣ</strong><br />
         Τηλ: 2811812735 – 6907793443<br />
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">sale[at]offerakrogonosinternationalgroup.eu</span><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">sale[at]energiakakoufomata-koufomatapvc.gr</span><br />
         📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">koufomata.pvc[at]gmail.com</span><br /><br />
         
         <strong>Γραφεία Ηράκλειο Κρήτης Ολούντος 34</strong><br />
         Τηλ: 2811812736<br />
-        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">prosfores[at]offerakrogonosinternationalgroup.eu</span><br /><br />
+        📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">prosfores[at]energiakakoufomata-koufomatapvc.gr</span><br /><br />
         
         📧 <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">pvc.laminate[at]gmail.com</span><br />
-        🌐 Website: <a href="https://offerakrogonosinternationalgroup.eu/" target="_blank" style="color: #3498db; text-decoration: none;">offerakrogonosinternationalgroup.eu</a><br />
-        🔗 Επικοινωνία: <a href="https://offerakrogonosinternationalgroup.eu/epikoinonia/" target="_blank" style="color: #3498db; text-decoration: none;">offerakrogonosinternationalgroup.eu/epikoinonia</a>
+        🌐 Website: <a href="https://www.energiakakoufomata-koufomatapvc.gr/" target="_blank" style="color: #3498db; text-decoration: none;">energiakakoufomata-koufomatapvc.gr</a><br />
+        🔗 Επικοινωνία: <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" target="_blank" style="color: #3498db; text-decoration: none;">energiakakoufomata-koufomatapvc.gr/epikoinonia</a>
       </div>
     `;
   }
@@ -115,8 +115,7 @@ export class EmailTemplate {
         </p>
         <p style="margin-top: 10px;">
           ${config.company.name}<br>
-          Email: <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">${config.company.replyTo.replace('@', '[at]')}</span><br>
-          Email: <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">sale[at]offerakrogonosinternationalgroup.eu</span>
+          Email: <span style="color: #666; pointer-events: none;" data-auto-link="false" data-apple-data-detectors="false">${config.company.replyTo.replace('@', '[at]')}</span>
         </p>
       </div>
     `;
