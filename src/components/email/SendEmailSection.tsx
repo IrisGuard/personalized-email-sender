@@ -11,7 +11,7 @@ import { API_BASE_URL } from '@/utils/api';
 interface SendEmailSectionProps {
   formData: OfferFormData;
   uploadedImageUrl: string;
-  selectedStoredImages: string[];
+  selectedStoredImageIds: string[];
   recipientCount: number;
   sending: boolean;
   setSending: (sending: boolean) => void;
@@ -22,7 +22,7 @@ interface SendEmailSectionProps {
 const SendEmailSection: React.FC<SendEmailSectionProps> = ({
   formData,
   uploadedImageUrl,
-  selectedStoredImages,
+  selectedStoredImageIds,
   recipientCount,
   sending,
   setSending,
@@ -35,6 +35,7 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
     console.log('🚀 SendEmails called with formData:', formData);
     console.log('📨 Recipients count:', recipientCount);
     console.log('🖼️ Image URL from props:', uploadedImageUrl);
+    console.log('📋 Selected stored image IDs:', selectedStoredImageIds);
     console.log('🔍 Full formData object:', JSON.stringify(formData, null, 2));
     
     // Check backend health first
@@ -54,7 +55,7 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
     }
     
     // Validation - either uploaded image or stored images
-    if (!uploadedImageUrl && selectedStoredImages.length === 0) {
+    if (!uploadedImageUrl && selectedStoredImageIds.length === 0) {
       toast({
         title: 'Λείπουν εικόνες',
         description: 'Παρακαλώ επιλέξτε τουλάχιστον μία εικόνα ή ανεβάστε νέα',
@@ -86,6 +87,7 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
         ...formData,
         recipients,
         imageUrl: uploadedImageUrl,
+        storedImages: selectedStoredImageIds,
       });
       
       const response = await fetch(`${API_BASE_URL}/send-offer-emails`, {
@@ -100,7 +102,7 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
           ...formData,
           recipients,
           imageUrl: uploadedImageUrl,
-          storedImages: selectedStoredImages,
+          storedImages: selectedStoredImageIds,
         }),
       });
 
@@ -144,7 +146,7 @@ const SendEmailSection: React.FC<SendEmailSectionProps> = ({
           <div className="text-center space-y-4">
             <Button
               onClick={sendEmails}
-              disabled={sending || (!uploadedImageUrl && selectedStoredImages.length === 0) || recipientCount === 0}
+              disabled={sending || (!uploadedImageUrl && selectedStoredImageIds.length === 0) || recipientCount === 0}
               className="w-full max-w-md mx-auto flex items-center gap-2 text-lg py-6"
               size="lg"
             >

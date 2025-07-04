@@ -20,7 +20,7 @@ const UnifiedEmailSender = () => {
   const [uploading, setUploading] = useState(false);
   const [sending, setSending] = useState(false);
   const [uploadedImageUrl, setUploadedImageUrl] = useState('');
-  const [selectedStoredImages, setSelectedStoredImages] = useState<string[]>([]);
+  const [selectedStoredImageIds, setSelectedStoredImageIds] = useState<string[]>([]);
   const [emailStats, setEmailStats] = useState<EmailStats | null>(null);
   
   // Use recipients array instead of string for RecipientsList
@@ -67,8 +67,8 @@ const UnifiedEmailSender = () => {
             </TabsList>
             <TabsContent value="stored">
               <ImageSelector
-                selectedImages={selectedStoredImages}
-                onSelectionChange={setSelectedStoredImages}
+                selectedImages={selectedStoredImageIds}
+                onSelectionChange={setSelectedStoredImageIds}
               />
             </TabsContent>
             <TabsContent value="upload">
@@ -102,7 +102,7 @@ const UnifiedEmailSender = () => {
       <SendEmailSection
         formData={{...formData, recipients: recipients}}
         uploadedImageUrl={uploadedImageUrl}
-        selectedStoredImages={selectedStoredImages}
+        selectedStoredImageIds={selectedStoredImageIds}
         recipientCount={recipientCount}
         sending={sending}
         setSending={setSending}
