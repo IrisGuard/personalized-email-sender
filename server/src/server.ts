@@ -56,12 +56,11 @@ app.use(express.static(path.join(__dirname, '../../dist'), {
   }
 }));
 
-// Improved catch-all route with better error handling
+// Improved catch-all route with better error handling - ONLY for GET requests
 app.get('*', (req, res) => {
   // Skip API routes and bot scans
   if (req.path.startsWith('/api') || 
       req.path.startsWith('/health') || 
-      req.path.startsWith('/send-offer-emails') || 
       req.path.startsWith('/upload') ||
       req.path.includes('wp-') ||
       req.path.includes('.php') ||
