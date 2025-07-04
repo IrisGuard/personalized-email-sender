@@ -11,7 +11,7 @@ const UnifiedEmailSender = () => {
     title: '',
     description: '',
     price: '',
-    cta: 'Επικοινωνήστε μαζί μας',
+    cta: 'Περισσότερες Πληροφορίες',
     recipients: ''
   });
   

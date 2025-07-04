@@ -36,28 +36,28 @@ const EmailContentForm: React.FC<EmailContentFormProps> = ({
 
   const descriptionOptions = [
     {
-      label: 'Προσφορά έτοιμου τεμαχίου σε τιμή χονδρικής',
-      value: 'Η προσφορά αφορά έτοιμο τεμάχιο σε τιμή χονδρικής, ιδανικό για άμεση παράδοση. Προτείνουμε επικοινωνία για περισσότερες λεπτομέρειες σχετικά με διαστάσεις, χρώματα και τεχνικές προδιαγραφές.'
+      label: 'Έτοιμο τεμάχιο σε τιμή χονδρικής',
+      value: 'Το παρουσιαζόμενο τεμάχιο είναι έτοιμο για άμεση παράδοση σε τιμή χονδρικής. Προτείνουμε επικοινωνία για περισσότερες λεπτομέρειες σχετικά με διαστάσεις, χρώματα και τεχνικές προδιαγραφές.'
     },
     {
-      label: 'Εκμετάλλευση προσφοράς συγκεκριμένου τεμαχίου',
-      value: 'Εκμεταλλευτείτε την προσφορά για το συγκεκριμένο τεμάχιο που παρουσιάζουμε σε ανταγωνιστική τιμή. Η προσφορά περιλαμβάνει όλες τις απαραίτητες λεπτομέρειες για την αξιολόγησή της από την πλευρά σας.'
+      label: 'Διαθέσιμο τεμάχιο με τεχνικές προδιαγραφές',
+      value: 'Το συγκεκριμένο τεμάχιο που παρουσιάζουμε είναι διαθέσιμο σε τιμές αγοράς. Περιλαμβάνει όλες τις απαραίτητες λεπτομέρειες για την αξιολόγησή του από την πλευρά σας.'
     },
     {
-      label: 'Ενδεικτική προσφορά τιμών μας',
-      value: 'Η συγκεκριμένη προσφορά είναι ενδεικτική των τιμών μας και της ποιότητας που προσφέρουμε. Για περισσότερες πληροφορίες και προσαρμογές στις ανάγκες σας, επικοινωνήστε μαζί μας.'
+      label: 'Ενδεικτικές τιμές και ποιότητα',
+      value: 'Το συγκεκριμένο προϊόν είναι ενδεικτικό των τιμών μας και της ποιότητας που παρέχουμε. Για περισσότερες πληροφορίες και προσαρμογές στις ανάγκες σας, επικοινωνήστε μαζί μας.'
     },
     {
-      label: 'Επιλεγμένη προσφορά από τη γκάμα μας',
-      value: 'Σας παρουσιάζουμε μία επιλεγμένη προσφορά από τη μεγάλη γκάμα προϊόντων μας. Η τιμή και τα χαρακτηριστικά που βλέπετε αντικατοπτρίζουν την ποιότητα και την αξία που προσφέρουμε.'
+      label: 'Επιλεγμένο προϊόν από τη γκάμα μας',
+      value: 'Σας παρουσιάζουμε ένα επιλεγμένο προϊόν από τη μεγάλη γκάμα μας. Η τιμή και τα χαρακτηριστικά που βλέπετε αντικατοπτρίζουν την ποιότητα και την αξία που παρέχουμε.'
     },
     {
-      label: 'Προσφορά έτοιμου τεμαχίου για παράδοση',
-      value: 'Η προσφορά ισχύει για συγκεκριμένο τεμάχιο, έτοιμο για παράδοση. Οι διαστάσεις, το χρώμα και οι προδιαγραφές φαίνονται στην εικόνα που συνοδεύει την προσφορά.'
+      label: 'Διαθέσιμο τεμάχιο για παράδοση',
+      value: 'Το προϊόν ισχύει για συγκεκριμένο τεμάχιο, έτοιμο για παράδοση. Οι διαστάσεις, το χρώμα και οι προδιαγραφές φαίνονται στην εικόνα που συνοδεύει το προϊόν.'
     },
     {
-      label: 'Ακόμη μία προσφορά από τη μεγάλη γκάμα μας',
-      value: 'Μία ακόμη προσφορά από τη μεγάλη γκάμα μας, σχεδιασμένη να καλύψει τις ανάγκες σας σε ανταγωνιστικές τιμές. Για περισσότερες επιλογές, επικοινωνήστε μαζί μας.'
+      label: 'Προϊόν από τη μεγάλη γκάμα μας',
+      value: 'Ένα προϊόν από τη μεγάλη γκάμα μας, σχεδιασμένο να καλύψει τις ανάγκες σας σε τιμές αγοράς. Για περισσότερες επιλογές, επικοινωνήστε μαζί μας.'
     }
   ];
 
@@ -78,40 +78,10 @@ const EmailContentForm: React.FC<EmailContentFormProps> = ({
         <CardTitle>Περιεχόμενο Email</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="subject">Θέμα Email *</Label>
-          <Select value={formData.subject} onValueChange={(value) => updateFormData('subject', value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Επιλέξτε θέμα email" />
-            </SelectTrigger>
-            <SelectContent>
-              {subjectOptions.map((option) => (
-                <SelectItem key={option} value={option}>
-                  {option}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        
-        <div className="space-y-2">
-          <Label htmlFor="title">Τίτλος Προσφοράς *</Label>
-          <Select value={formData.title} onValueChange={(value) => updateFormData('title', value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Επιλέξτε τίτλο προσφοράς" />
-            </SelectTrigger>
-            <SelectContent>
-              {titleOptions.map((option) => (
-                <SelectItem key={option} value={option}>
-                  {option}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        {/* Removed Θέμα Email and Τίτλος Προσφοράς for spam-free optimization */}
 
         <div className="space-y-2">
-          <Label htmlFor="description">Περιγραφή Προσφοράς</Label>
+          <Label htmlFor="description">Περιγραφή Προϊόντος</Label>
           <div className="space-y-2">
             <Select onValueChange={(value) => updateFormData('description', value)}>
               <SelectTrigger>
@@ -129,7 +99,7 @@ const EmailContentForm: React.FC<EmailContentFormProps> = ({
               id="description"
               value={formData.description}
               onChange={(e) => updateFormData('description', e.target.value)}
-              placeholder="Περιγράψτε τα χαρακτηριστικά και τα πλεονεκτήματα της προσφοράς..."
+              placeholder="Περιγράψτε τα χαρακτηριστικά και τα πλεονεκτήματα του προϊόντος..."
               rows={4}
             />
           </div>
@@ -191,7 +161,7 @@ const EmailContentForm: React.FC<EmailContentFormProps> = ({
               id="cta"
               value={formData.cta}
               onChange={(e) => updateFormData('cta', e.target.value)}
-              placeholder="π.χ. Επικοινωνήστε μαζί μας"
+              placeholder="π.χ. Περισσότερες Πληροφορίες"
             />
           </div>
         </div>

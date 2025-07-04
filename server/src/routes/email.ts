@@ -75,11 +75,11 @@ export const sendOfferEmails = async (req: Request, res: Response) => {
       });
     }
 
-    // Create email data
+    // Create email data with hardcoded professional subject
     const emailData: EmailData = {
       recipients: validEmails,
-      subject,
-      title,
+      subject: 'Ενημέρωση Προϊόντων - AKROGONOS INTERNATIONAL GROUP',
+      title: title || 'Ενημέρωση προϊόντων',
       description,
       price,
       cta,

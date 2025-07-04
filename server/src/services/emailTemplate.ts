@@ -10,13 +10,13 @@ export class EmailTemplate {
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
         <!-- Preheader text for better preview -->
         <div style="display: none; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; opacity: 0;">
-          ${emailData.title} - Ειδική προσφορά από ${config.company.name}
+          ${emailData.title} - Ενημέρωση προϊόντων από ${config.company.name}
         </div>
         
         <div style="background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
-          <!-- Personal greeting to appear less bulk -->
+          <!-- Professional greeting -->
           <div style="color: #666; font-size: 14px; margin-bottom: 20px; text-align: center;">
-            Αγαπητέ/ή πελάτη, σας στέλνουμε αυτή την προσωπική προσφορά
+            Αγαπητέ/ή πελάτη, σας ενημερώνουμε για τα διαθέσιμα προϊόντα μας
           </div>
           
           <h1 style="color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 15px; margin-bottom: 25px; font-size: 24px;">
@@ -34,14 +34,14 @@ export class EmailTemplate {
           </div>
           
           ${emailData.price && emailData.price.trim() !== '' ? `
-            <div style="background-color: #e8f5e8; border: 2px solid #4a7c59; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-              <div style="font-size: 14px; color: #2c5530; margin-bottom: 8px; font-weight: 500;">ΤΙΜΗ ΠΡΟΣΦΟΡΑΣ</div>
-              <div style="color: #2c5530; font-size: 24px; font-weight: bold; margin: 5px 0;">€${emailData.price}</div>
-              <div style="color: #2c5530; font-size: 16px; font-weight: 600;">(χωρίς Φ.Π.Α.)</div>
+            <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 25px 0; text-align: center;">
+              <div style="font-size: 14px; color: #495057; margin-bottom: 8px; font-weight: 500;">ΤΙΜΗ ΠΡΟΪΟΝΤΟΣ</div>
+              <div style="color: #495057; font-size: 24px; font-weight: bold; margin: 5px 0;">€${emailData.price}</div>
+              <div style="color: #495057; font-size: 16px; font-weight: 600;">(χωρίς Φ.Π.Α.)</div>
             </div>
           ` : `
-            <div style="background-color: #f0f4ff; border: 2px solid #3498db; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center;">
-              <div style="color: #2c3e50; font-size: 18px; font-weight: 600;">Επικοινωνήστε για προσφορά</div>
+            <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 25px 0; text-align: center;">
+              <div style="color: #495057; font-size: 18px; font-weight: 600;">Επικοινωνήστε για πληροφορίες</div>
             </div>
           `}
           
@@ -75,9 +75,9 @@ export class EmailTemplate {
         <strong>AKROGONOS INTERNATIONAL GROUP</strong><br />
         ΑΘΗΝΑ - ΠΕΙΡΑΙΑ - ΚΡΗΤΗ - ΒΟΥΛΓΑΡΙΑ – ΠΩΛΗΣΗ ΠΑΝΕΛΑΔΙΚΑ - ΑΝΤΙΠΡΟΣΩΠΕΙΕΣ / ΕΙΣΑΓΩΓΕΣ – ΕΞΑΓΩΓΕΣ<br /><br />
         
-        <div style="margin: 15px 0; padding: 15px; background-color: #e8f4f8; border-left: 4px solid #3498db; border-radius: 4px;">
-          <strong style="color: #2c3e50;">Ζητήστε μας μια οικονομική προσφορά</strong><br />
-          <span style="color: #34495e;">Με ένα ολοκληρωμένο δίκτυο διανομής είμαστε σε θέση να προμηθεύουμε Πανελλαδικά τα προϊόντα μας στις καλύτερες τιμές της αγοράς με συνέπεια, ευθύνη και αξιοπιστία.</span>
+        <div style="margin: 15px 0; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #6c757d; border-radius: 4px;">
+          <strong style="color: #495057;">Επικοινωνήστε μαζί μας για περισσότερες πληροφορίες</strong><br />
+          <span style="color: #6c757d;">Με ένα ολοκληρωμένο δίκτυο διανομής είμαστε σε θέση να προμηθεύουμε Πανελλαδικά τα προϊόντα μας με συνέπεια, ευθύνη και αξιοπιστία.</span>
         </div><br />
         
         <strong>Γραφείο Εξαγωγών – Πειραιά Νόταρα 117</strong><br />
