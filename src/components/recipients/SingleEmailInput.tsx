@@ -52,7 +52,7 @@ const SingleEmailInput: React.FC<SingleEmailInputProps> = ({
         <Input
           id="email"
           type="email"
-          placeholder="customer@company.gr"
+          placeholder="customer[at]company.gr"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);

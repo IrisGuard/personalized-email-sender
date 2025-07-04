@@ -97,7 +97,7 @@ export const getEmailJSConfig = () => ({
   serviceId: 'gmail-smtp',
   templateId: 'akrogonos-template',
   publicKey: 'production-ready',
-  senderEmail: 'koufomataxondriki@gmail.com',
-  replyToEmail: 'koufomataxondriki@gmail.com',
+  senderEmail: 'koufomataxondriki[at]gmail.com',
+  replyToEmail: 'koufomataxondriki[at]gmail.com',
   companyName: 'AKROGONOS INTERNATIONAL GROUP'
 });
