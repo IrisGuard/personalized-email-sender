@@ -4,7 +4,7 @@ import { EmailData } from '../types/email';
 export class EmailTemplate {
   static generateHTML(emailData: EmailData, recipient: string): string {
     const unsubscribeToken = Buffer.from(recipient).toString('base64');
-    const unsubscribeUrl = `mailto:unsubscribe+${unsubscribeToken}@${config.company.senderEmail.split('@')[1]}?subject=Unsubscribe`;
+    const unsubscribeUrl = `mailto:unsubscribe+${unsubscribeToken}@offerakrogonosinternationalgroup.eu?subject=Unsubscribe`;
     
     return `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
@@ -35,19 +35,19 @@ export class EmailTemplate {
           
           ${emailData.price && emailData.price.trim() !== '' ? `
             <div style="background-color: #e8f5e8; border: 2px solid #4a7c59; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-              <div style="font-size: 14px; color: #2c5530; margin-bottom: 8px; font-weight: 500;">💰 ΤΙΜΗ ΠΡΟΣΦΟΡΑΣ</div>
+              <div style="font-size: 14px; color: #2c5530; margin-bottom: 8px; font-weight: 500;">ΤΙΜΗ ΠΡΟΣΦΟΡΑΣ</div>
               <div style="color: #2c5530; font-size: 24px; font-weight: bold; margin: 5px 0;">€${emailData.price}</div>
               <div style="color: #2c5530; font-size: 16px; font-weight: 600;">(χωρίς Φ.Π.Α.)</div>
             </div>
           ` : `
             <div style="background-color: #f0f4ff; border: 2px solid #3498db; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center;">
-              <div style="color: #2c3e50; font-size: 18px; font-weight: 600;">📞 Επικοινωνήστε για προσφορά</div>
+              <div style="color: #2c3e50; font-size: 18px; font-weight: 600;">Επικοινωνήστε για προσφορά</div>
             </div>
           `}
           
           ${emailData.cta ? `
             <div style="text-align: center; margin: 30px 0;">
-              <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" 
+              <a href="https://offerakrogonosinternationalgroup.eu/epikoinonia/" 
                  target="_blank"
                  style="background-color: #3498db; color: white; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block;">
                 ${emailData.cta}
@@ -81,25 +81,25 @@ export class EmailTemplate {
         </div><br />
         
         <strong>Γραφείο Εξαγωγών – Πειραιά Νόταρα 117</strong><br />
-        📧 <span style="color: #3498db;">imports@energiakakoufomata-koufomatapvc.gr</span><br />
-        📧 <span style="color: #3498db;">export@energiakakoufomata-koufomatapvc.gr</span><br /><br />
+        📧 <span style="color: #3498db;">imports@offerakrogonosinternationalgroup.eu</span><br />
+        📧 <span style="color: #3498db;">export@offerakrogonosinternationalgroup.eu</span><br /><br />
         
         <strong>Γραφείο Ηράκλειο Κρήτης Σεφέρη 5</strong><br />
         Τηλ: 2811117934 – 6939366243<br />
-        📧 <span style="color: #3498db;">paragelies@energiakakoufomata-koufomatapvc.gr</span><br /><br />
+        📧 <span style="color: #3498db;">paragelies@offerakrogonosinternationalgroup.eu</span><br /><br />
         
         <strong>Γραφεία Ηράκλειο Κρήτης Γερωνυμάκη 104 – ΠΑΤΕΛΕΣ</strong><br />
         Τηλ: 2811812735 – 6907793443<br />
-        📧 <span style="color: #3498db;">sale@energiakakoufomata-koufomatapvc.gr</span><br />
+        📧 <span style="color: #3498db;">sale@offerakrogonosinternationalgroup.eu</span><br />
         📧 <span style="color: #3498db;">koufomata.pvc@gmail.com</span><br /><br />
         
         <strong>Γραφεία Ηράκλειο Κρήτης Ολούντος 34</strong><br />
         Τηλ: 2811812736<br />
-        📧 <span style="color: #3498db;">prosfores@energiakakoufomata-koufomatapvc.gr</span><br /><br />
+        📧 <span style="color: #3498db;">prosfores@offerakrogonosinternationalgroup.eu</span><br /><br />
         
         📧 <span style="color: #3498db;">pvc.laminate@gmail.com</span><br />
-        🌐 Website: <a href="https://www.energiakakoufomata-koufomatapvc.gr/" target="_blank" style="color: #3498db; text-decoration: none;">www.energiakakoufomata-koufomatapvc.gr</a><br />
-        🔗 Επικοινωνία: <a href="https://www.energiakakoufomata-koufomatapvc.gr/epikoinonia/" target="_blank" style="color: #3498db; text-decoration: none;">www.energiakakoufomata-koufomatapvc.gr/epikoinonia</a>
+        🌐 Website: <a href="https://offerakrogonosinternationalgroup.eu/" target="_blank" style="color: #3498db; text-decoration: none;">offerakrogonosinternationalgroup.eu</a><br />
+        🔗 Επικοινωνία: <a href="https://offerakrogonosinternationalgroup.eu/epikoinonia/" target="_blank" style="color: #3498db; text-decoration: none;">offerakrogonosinternationalgroup.eu/epikoinonia</a>
       </div>
     `;
   }
@@ -116,7 +116,7 @@ export class EmailTemplate {
         <p style="margin-top: 10px;">
           ${config.company.name}<br>
           Email: <span style="color: #666;">${config.company.replyTo}</span><br>
-          Email: <span style="color: #666;">sale@energiakakoufomata-koufomatapvc.gr</span>
+          Email: <span style="color: #666;">sale@offerakrogonosinternationalgroup.eu</span>
         </p>
       </div>
     `;

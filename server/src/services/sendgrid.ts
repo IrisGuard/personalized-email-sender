@@ -31,14 +31,12 @@ export class SendGridService {
       subject,
       html,
       replyTo,
-      // Enhanced anti-spam headers for maximum deliverability
+      // Professional email headers for maximum deliverability
       headers: {
         'Message-ID': messageId,
         'Date': currentDate,
-        'List-Unsubscribe': `<mailto:unsubscribe+${Buffer.from(to).toString('base64')}@${from.split('@')[1]}>`,
+        'List-Unsubscribe': `<mailto:unsubscribe+${Buffer.from(to).toString('base64')}@offerakrogonosinternationalgroup.eu>`,
         'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
-        'X-Auto-Response-Suppress': 'All',
-        'Precedence': 'bulk',
         'X-Mailer': 'AKROGONOS-EmailSystem-v1.0',
         'X-Priority': '3',
         'X-MSMail-Priority': 'Normal',
