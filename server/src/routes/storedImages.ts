@@ -16,8 +16,50 @@ interface StoredImage {
   size: number;
 }
 
-// In-memory storage for demo - replace with database in production
+// File-based persistent storage
+const STORAGE_FILE = path.join(__dirname, '../../data/stored-images.json');
 let storedImages: StoredImage[] = [];
+
+// Ensure data directory exists
+const ensureDataDirectory = (): void => {
+  const dataDir = path.dirname(STORAGE_FILE);
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+    console.log('📁 Created data directory:', dataDir);
+  }
+};
+
+// Load stored images from file
+const loadStoredImages = (): void => {
+  try {
+    ensureDataDirectory();
+    if (fs.existsSync(STORAGE_FILE)) {
+      const data = fs.readFileSync(STORAGE_FILE, 'utf8');
+      storedImages = JSON.parse(data);
+      console.log(`📚 Loaded ${storedImages.length} stored images from file`);
+    } else {
+      console.log('📚 No stored images file found, starting fresh');
+      storedImages = [];
+    }
+  } catch (error) {
+    console.error('❌ Error loading stored images:', error);
+    storedImages = [];
+  }
+};
+
+// Save stored images to file
+const saveStoredImages = (): void => {
+  try {
+    ensureDataDirectory();
+    fs.writeFileSync(STORAGE_FILE, JSON.stringify(storedImages, null, 2), 'utf8');
+    console.log(`💾 Saved ${storedImages.length} stored images to file`);
+  } catch (error) {
+    console.error('❌ Error saving stored images:', error);
+  }
+};
+
+// Initialize storage on module load
+loadStoredImages();
 
 export const getStoredImages = async (req: Request, res: Response) => {
   try {
@@ -128,8 +170,9 @@ export const uploadStoredImage = async (req: Request, res: Response) => {
       size: req.file.size
     };
 
-    // Add to storage
+    // Add to storage and save to file
     storedImages.push(storedImage);
+    saveStoredImages();
 
     // Clean up original file
     fs.unlinkSync(req.file.path);
@@ -176,8 +219,9 @@ export const deleteStoredImage = async (req: Request, res: Response) => {
       console.warn('Warning: Could not delete image file:', fileError);
     }
 
-    // Remove from storage
+    // Remove from storage and save to file
     storedImages.splice(imageIndex, 1);
+    saveStoredImages();
 
     console.log('🗑️ Stored image deleted:', imageId);
 
