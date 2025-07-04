@@ -102,7 +102,7 @@ export class EmailQueue {
       await sendGridService.sendEmail({
         to: recipient,
         subject: emailData.subject,
-        html: EmailTemplate.generateHTML(emailData, recipient, emailData.storedImages),
+        html: EmailTemplate.generateHTML(emailData, recipient),
         from: `"${config.company.name}" <${config.company.senderEmail}>`,
         replyTo: config.company.replyTo
       });

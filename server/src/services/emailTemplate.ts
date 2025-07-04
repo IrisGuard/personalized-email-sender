@@ -1,10 +1,60 @@
 import { config } from '../config/environment';
 import { EmailData } from '../types/email';
+import path from 'path';
+import fs from 'fs';
+
+interface StoredImage {
+  id: string;
+  filename: string;
+  url: string;
+  title: string;
+  category: string;
+  uploadDate: string;
+  size: number;
+}
+
+// Load stored images from file
+const loadStoredImages = (): StoredImage[] => {
+  try {
+    const STORAGE_FILE = path.join(__dirname, '../../data/stored-images.json');
+    if (fs.existsSync(STORAGE_FILE)) {
+      const data = fs.readFileSync(STORAGE_FILE, 'utf8');
+      return JSON.parse(data);
+    }
+  } catch (error) {
+    console.error('❌ Error loading stored images for email template:', error);
+  }
+  return [];
+};
+
+// Convert stored image IDs to URLs
+const convertStoredImageIdsToUrls = (imageIds: string[]): string[] => {
+  if (!imageIds || imageIds.length === 0) return [];
+  
+  const storedImages = loadStoredImages();
+  const urls: string[] = [];
+  
+  for (const imageId of imageIds) {
+    const foundImage = storedImages.find(img => img.id === imageId);
+    if (foundImage) {
+      urls.push(foundImage.url);
+      console.log(`✅ Converted stored image ID ${imageId} to URL: ${foundImage.url}`);
+    } else {
+      console.warn(`⚠️ Stored image with ID ${imageId} not found`);
+    }
+  }
+  
+  return urls;
+};
 
 export class EmailTemplate {
-  static generateHTML(emailData: EmailData, recipient: string, imageUrls: string[] = []): string {
+  static generateHTML(emailData: EmailData, recipient: string): string {
     const unsubscribeToken = Buffer.from(recipient).toString('base64');
     const unsubscribeUrl = `https://offerakrogonosinternationalgroup.eu/unsubscribe?token=${unsubscribeToken}`;
+    
+    // Convert stored image IDs to URLs
+    const storedImageUrls = convertStoredImageIdsToUrls(emailData.storedImages || []);
+    console.log(`🔄 Converted ${emailData.storedImages?.length || 0} stored image IDs to ${storedImageUrls.length} URLs`);
     
     return `
 <!DOCTYPE html>
@@ -46,8 +96,8 @@ export class EmailTemplate {
                 ${emailData.title}
               </h1>
               
-              <!-- Image section with professional display -->
-              ${this.generateImageSection(emailData.imageUrl, imageUrls)}
+               <!-- Image section with professional display -->
+               ${this.generateImageSection(emailData.imageUrl, storedImageUrls)}
               
               <!-- Description -->
               <div style="font-size: 16px; line-height: 1.6; color: #333; margin: 20px 0; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">

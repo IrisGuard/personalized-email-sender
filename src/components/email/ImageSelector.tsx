@@ -18,7 +18,7 @@ interface StoredImage {
 
 interface ImageSelectorProps {
   selectedImages: string[];
-  onSelectionChange: (imageUrls: string[]) => void;
+  onSelectionChange: (imageIds: string[]) => void;
 }
 
 const ImageSelector: React.FC<ImageSelectorProps> = ({
@@ -52,12 +52,12 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
     }
   };
 
-  const handleImageToggle = (imageUrl: string) => {
-    const isSelected = selectedImages.includes(imageUrl);
+  const handleImageToggle = (imageId: string) => {
+    const isSelected = selectedImages.includes(imageId);
     if (isSelected) {
-      onSelectionChange(selectedImages.filter(url => url !== imageUrl));
+      onSelectionChange(selectedImages.filter(id => id !== imageId));
     } else {
-      onSelectionChange([...selectedImages, imageUrl]);
+      onSelectionChange([...selectedImages, imageId]);
     }
   };
 
@@ -118,7 +118,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
             {/* Image Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {filteredImages.map((image) => {
-                const isSelected = selectedImages.includes(image.url);
+                const isSelected = selectedImages.includes(image.id);
                 return (
                   <div
                     key={image.id}
@@ -127,7 +127,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
                         ? 'ring-2 ring-primary bg-primary/5' 
                         : 'hover:ring-1 hover:ring-muted-foreground/50'
                     }`}
-                    onClick={() => handleImageToggle(image.url)}
+                    onClick={() => handleImageToggle(image.id)}
                   >
                     <img
                       src={image.url}
@@ -138,7 +138,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
                       <div className="flex items-center gap-2">
                         <Checkbox
                           checked={isSelected}
-                          onChange={() => handleImageToggle(image.url)}
+                          onChange={() => handleImageToggle(image.id)}
                           className="flex-shrink-0"
                         />
                         <span className="text-xs font-medium truncate flex-1">
