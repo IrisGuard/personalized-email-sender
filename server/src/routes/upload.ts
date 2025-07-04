@@ -3,6 +3,7 @@ import path from 'path';
 import sharp from 'sharp';
 import fs from 'fs';
 import FormData from 'form-data';
+import { ImgBBResponse } from '../types/imgbb';
 
 export const uploadImage = async (req: Request, res: Response) => {
   try {
@@ -74,7 +75,7 @@ export const uploadImage = async (req: Request, res: Response) => {
       body: formData,
     });
     
-    const cdnData = await cdnResponse.json();
+    const cdnData = await cdnResponse.json() as ImgBBResponse;
     
     if (!cdnData.success) {
       // Fallback to local hosting with optimized image
@@ -84,7 +85,7 @@ export const uploadImage = async (req: Request, res: Response) => {
       var imageUrl = `${protocol}://${host}/uploads/${professionalFilename}`;
       console.log('⚠️ CDN failed, using local hosting with optimization:', imageUrl);
     } else {
-      var imageUrl = cdnData.data.url;
+      var imageUrl = cdnData.data?.url || '';
       console.log('🚀 CDN Upload successful with professional optimization:', imageUrl);
     }
     
@@ -98,8 +99,8 @@ export const uploadImage = async (req: Request, res: Response) => {
       professionalFilename,
       size: req.file.size,
       optimizedForEmail: true,
-      cdnHosted: cdnData?.success || false,
-      deliverabilityScore: cdnData?.success ? '99.8%' : '92%',
+      cdnHosted: cdnData.success || false,
+      deliverabilityScore: cdnData.success ? '99.8%' : '92%',
       metadataStripped: true,
       sizeOptimized: finalBuffer.length < 150000,
       emailClientOptimized: true

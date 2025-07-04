@@ -4,6 +4,7 @@ import sharp from 'sharp';
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 import FormData from 'form-data';
+import { ImgBBResponse } from '../types/imgbb';
 
 interface StoredImage {
   id: string;
@@ -102,7 +103,7 @@ export const uploadStoredImage = async (req: Request, res: Response) => {
       body: formData,
     });
     
-    const cdnData = await cdnResponse.json();
+    const cdnData = await cdnResponse.json() as ImgBBResponse;
     
     if (!cdnData.success) {
       // Fallback to local hosting with final optimized buffer
@@ -112,7 +113,7 @@ export const uploadStoredImage = async (req: Request, res: Response) => {
       var imageUrl = `${protocol}://${host}/uploads/${professionalFilename}`;
       console.log('⚠️ CDN failed for stored image, using local hosting with optimization:', imageUrl);
     } else {
-      var imageUrl = cdnData.data.url;
+      var imageUrl = cdnData.data?.url || '';
       console.log('🚀 Stored image CDN Upload successful with professional optimization:', imageUrl);
     }
 
